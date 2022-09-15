@@ -45,7 +45,7 @@ class AlbumFragmentState extends ChangeNotifier {
       'page': page,
     };
     try {
-      final resStep1 = await HTTPAlbum().getAlbum(
+      final resStep1 = await HTTPAlbum().getForm(
         data: data,
       );
 
