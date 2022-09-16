@@ -47,7 +47,7 @@ class DetailsVideoState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPVideo().detailsVideo(
+    final resStep1 = await HTTPVideo().detailsVideo<DataVideoRes>(
       id: id,
     );
 

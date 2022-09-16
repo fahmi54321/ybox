@@ -47,7 +47,7 @@ class DetailsTracksState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPTrack().detailsTrack(
+    final resStep1 = await HTTPTrack().detailsTrack<DataTrackRes>(
       id: id,
     );
 

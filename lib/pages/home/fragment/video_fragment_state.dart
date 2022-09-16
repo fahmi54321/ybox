@@ -48,7 +48,7 @@ class VideoFragmentStates extends ChangeNotifier {
       'page': page,
     };
     try {
-      final resStep1 = await HTTPVideo().getVideo(
+      final resStep1 = await HTTPVideo().getVideo<VideoRes>(
         data: data,
       );
 

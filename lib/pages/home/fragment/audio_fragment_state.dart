@@ -46,7 +46,7 @@ class RingtoneFragmentState extends ChangeNotifier {
       'page': page,
     };
     try {
-      final resStep1 = await HTTPRingtone().getRingtone(
+      final resStep1 = await HTTPRingtone().getRingtone<AudioRes>(
         data: data,
       );
 

@@ -43,7 +43,7 @@ class DetailsState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPAlbum().detailsForm(
+    final resStep1 = await HTTPAlbum().detailsFormAlbum<DataAlbumRes>(
       id: id,
     );
 

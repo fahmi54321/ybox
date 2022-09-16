@@ -45,7 +45,7 @@ class DetailsAudioState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPRingtone().detailsRingtone(
+    final resStep1 = await HTTPRingtone().detailsRingtone<DataAudioRes>(
       id: id,
     );
 

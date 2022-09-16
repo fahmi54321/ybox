@@ -47,7 +47,7 @@ class TracksFragmentStates extends ChangeNotifier {
       'page': page,
     };
     try {
-      final resStep1 = await HTTPTrack().getTrack(
+      final resStep1 = await HTTPTrack().getTrack<TrackRes>(
         data: data,
       );
 

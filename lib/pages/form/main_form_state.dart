@@ -1363,7 +1363,7 @@ class MainFormState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPAlbum().uploadForm(
+    final resStep1 = await HTTPAlbum().uploadFormAlbum(
       data: formData,
     );
 
@@ -1389,7 +1389,7 @@ class MainFormState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPAlbum().editForm(
+    final resStep1 = await HTTPAlbum().editFormAlbum(
       id: dataAlbumRes?.id ?? 0,
       data: formData,
     );
