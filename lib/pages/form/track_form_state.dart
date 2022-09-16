@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_storage/main.dart';
@@ -6,16 +7,13 @@ import 'package:cloud_storage/models/general/label_res.dart';
 import 'package:cloud_storage/models/general/language_res.dart';
 import 'package:cloud_storage/models/general/publishing_res.dart';
 import 'package:cloud_storage/models/general/roles_res.dart';
-import 'package:cloud_storage/network/http_album.dart';
+import 'package:cloud_storage/models/track/track_res.dart';
 import 'package:cloud_storage/network/http_general.dart';
-import 'package:cloud_storage/network/http_ringtone.dart';
 import 'package:cloud_storage/network/http_track.dart';
-import 'package:cloud_storage/network/http_video.dart';
-import 'package:cloud_storage/pages/form/main_info_page.dart';
-import 'package:cloud_storage/pages/form/publishing_page.dart';
 import 'package:cloud_storage/pages/form/publishing_track_page.dart';
-import 'package:cloud_storage/pages/form/track_page.dart';
 import 'package:cloud_storage/pages/form/track_with_audio_page.dart';
+import 'package:cloud_storage/resource/CPColors.dart';
+import 'package:cloud_storage/resource/strings.dart';
 import 'package:cloud_storage/utils/utils.dart';
 import 'package:cloud_storage/widget/v_text.dart';
 import 'package:dio/dio.dart';
@@ -245,9 +243,17 @@ class TrackFormState extends ChangeNotifier {
 
   bool isLoading = false;
 
-  TrackFormState(
-    this.context,
-  ) {
+  // edit
+  DataTrackRes? dataTrackRes;
+  String coverImageEdit = '';
+  String audioEdit = '';
+  bool isEdit = false;
+
+  TrackFormState({
+    required this.context,
+    this.dataTrackRes,
+  }) {
+    initEditAudio();
     init();
   }
 
@@ -258,6 +264,83 @@ class TrackFormState extends ChangeNotifier {
     getRoles();
     getPublishing();
   }
+
+  initEditAudio() {
+    if (dataTrackRes != null) {
+      isEdit = true;
+
+      // main
+      coverImageEdit = dataTrackRes?.image ?? '';
+
+      //tracks
+      audioEdit = dataTrackRes?.cover ?? '';
+      tracksInputInternalTracksId.text =
+          dataTrackRes?.internalTrackId?.toString() ?? '';
+      tracksInputTitleRelease.text = dataTrackRes?.trackTitle ?? '';
+      tracksInputTitleVersion.text = dataTrackRes?.trackVersion ?? '';
+      tracksInputArtist.text = dataTrackRes?.artisName ?? '';
+
+      if ((dataTrackRes?.spotify ?? '').isNotEmpty) {
+        tracksInputArtistSpotify.text = dataTrackRes?.spotify ?? '';
+        tracksYesInputArtistSpotify = 1;
+        tracksSelectInputArtistSpotify = 1;
+      } else {
+        tracksNoInputArtistSpotify = 0;
+        tracksSelectInputArtistSpotify = 0;
+      }
+
+      if ((dataTrackRes?.itunes ?? '').isNotEmpty) {
+        tracksInputArtistApple.text = dataTrackRes?.itunes ?? '';
+        tracksYesInputArtistApple = 1;
+        tracksSelectInputArtistApple = 1;
+      } else {
+        tracksNoInputArtistApple = 0;
+        tracksSelectInputArtistApple = 0;
+      }
+
+      if (dataTrackRes?.isrc != 0) {
+        tracksInputIsrcCode.text = dataTrackRes?.isrc.toString() ?? '';
+        tracksYesInputIsrcCode = 1;
+        tracksSelectInputIsrcCode = 1;
+      } else {
+        tracksNoInputIsrcCode = 0;
+        tracksSelectInputIsrcCode = 0;
+      }
+
+      if (dataTrackRes?.explisitLyric != 0) {
+        tracksInputExplicitLyrics.text =
+            dataTrackRes?.explisitLyric.toString() ?? '';
+        tracksYesInputExplicitLyrics = 1;
+        tracksSelectInputExplicitLyrics = 1;
+      } else {
+        tracksNoInputExplicitLyrics = 0;
+        tracksSelectInputExplicitLyrics = 0;
+      }
+
+      if (dataTrackRes?.thisTrackIs == 0) {
+        tracksOriginSong = 0;
+        tracksSelectInputTrackSong = 0;
+      } else {
+        tracksPublicSong = 1;
+        tracksSelectInputTrackSong = 1;
+      }
+
+      tracksInputCopyrightP.text = dataTrackRes?.pCopyright ?? "";
+      tracksInputCopyrightC.text =
+          dataTrackRes?.previewsStartTime?.toString() ?? '';
+      tracksInputLyrics.text = dataTrackRes?.lyric ?? '';
+
+      //publishing
+
+      tracksInputContributorName.text =
+          dataTrackRes?.contributor?.name ?? '';
+      tracksInputShare.text =
+          dataTrackRes?.contributor?.share?.toString() ?? '';
+
+      notifyListeners();
+    }
+  }
+
 
   List<Step> listSteps() {
     return [
@@ -336,7 +419,19 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listLanguage = cat;
-        languageResTrack = cat[0];
+        if (dataTrackRes != null) {
+          // edit
+          if (dataTrackRes?.lang != null) {
+            languageResTrack = LanguageRes(
+              id: dataTrackRes?.lang?.id ?? 0,
+              name: dataTrackRes?.lang?.name ?? '',
+            );
+          } else {
+            languageResTrack = cat[0];
+          }
+        } else {
+          languageResTrack = cat[0];
+        }
         isLoadingLanguage = false;
         notifyListeners();
       },
@@ -364,8 +459,29 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listGenre = cat;
-        genreRes1Tracks = cat[0];
-        genreRes2Tracks = cat[0];
+        if (dataTrackRes != null) {
+
+          if (dataTrackRes?.genre1 != null) {
+            genreRes1Tracks = GenreRes(
+              id: dataTrackRes?.genre1?.id ?? 0,
+              name: dataTrackRes?.genre1?.name ?? '',
+            );
+          } else {
+            genreRes1Tracks = cat[0];
+          }
+
+          if (dataTrackRes?.genre2 != null) {
+            genreRes2Tracks = GenreRes(
+              id: dataTrackRes?.genre2?.id ?? 0,
+              name: dataTrackRes?.genre2?.name ?? '',
+            );
+          } else {
+            genreRes2Tracks = cat[0];
+          }
+        } else {
+          genreRes1Tracks = cat[0];
+          genreRes2Tracks = cat[0];
+        }
         isLoadingGenre = false;
         notifyListeners();
       },
@@ -393,6 +509,15 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listLabel = cat;
+        // if ((dataTrackRes?.labelName ?? '').isNotEmpty) {
+        //   log('ada label');
+        //   log('${dataTrackRes?.labelName ?? ''}');
+        //   tracksLabel = dataTrackRes?.labelName ?? '';
+        // } else {
+        //   log('tidak ada label');
+        //   log('${cat[0].nama}');
+        //   tracksLabel = cat[0].nama;
+        // }
         tracksLabel = cat[0].nama;
         isLoadingLabel = false;
         notifyListeners();
@@ -421,8 +546,11 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listRole = cat;
-        pubRole = cat[0].name;
-        pubRoles = cat[0];
+        if (dataTrackRes?.contributor?.roleTrack != null) {
+          pubRoles = dataTrackRes?.contributor?.roleTrack;
+        } else {
+          pubRoles = cat[0];
+        }
         isLoadingRole = false;
         notifyListeners();
       },
@@ -450,8 +578,11 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listPublishing = cat;
-        pubPublishing = cat[0].name;
-        pubPublishings = cat[0];
+        if (dataTrackRes?.contributor?.publising != null) {
+          pubPublishings = dataTrackRes?.contributor?.publising;
+        } else {
+          pubPublishings = cat[0];
+        }
         isLoadingPublishing = false;
         notifyListeners();
       },
@@ -467,13 +598,18 @@ class TrackFormState extends ChangeNotifier {
     List<String> listErrValidate = [];
 
     // cover image
-    if (coverImage == null) {
-      isValidateMain = false;
-      listErrValidate.add('Images tidak boleh kosong');
+    if(isEdit == false) {
+      if (coverImage == null) {
+        isValidateMain = false;
+        listErrValidate.add('Images tidak boleh kosong');
+      }
     }
-    if (audio == null) {
-      isValidateMain = false;
-      listErrValidate.add('Audio tidak boleh kosong');
+
+    if(isEdit == false) {
+      if (audio == null) {
+        isValidateMain = false;
+        listErrValidate.add('Audio tidak boleh kosong');
+      }
     }
 
     albumSave.coverImage = coverImage;
@@ -517,42 +653,84 @@ class TrackFormState extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      var formData = FormData.fromMap(
-        {
-          "cover_albums": await MultipartFile.fromFile(
-            albumSave.coverImage?.path ?? '',
-            filename: albumSave.coverImage?.path
-                .split('/')
-                .last,
-          ),
-          "file_track": await MultipartFile.fromFile(
-            albumSave.audio?.path ?? '',
-            filename: albumSave.audio?.path,
-          ),
-          "lang_track": albumSave.languageTrackId,
-          "track_title": albumSave.trackTitle,
-          "title_version_track": albumSave.titleVersionTrack,
-          "artis_track": albumSave.artistTrack,
-          "spotify_track": albumSave.spotifyTrack,
-          "itunes_track": albumSave.itunesTrack,
-          "isrc": albumSave.isrc,
-          "rdolyrics": albumSave.rdolyrics,
-          "rdothis_track": albumSave.rdothisTrack,
-          "genre_info": albumSave.genreInfo,
-          "genre2_info": albumSave.genre2Info,
-          "p_copy_info": albumSave.pCopyInfo,
-          "start_time": albumSave.startTime,
-          "label_info": albumSave.labelInfo,
-          "track_ID_info": albumSave.trackIdInfo,
-          "lirik": albumSave.lirik,
-          "con_name": albumSave.conName,
-          "role_track": albumSave.roleTrack,
-          "share": albumSave.share,
-          "publishing": albumSave.publishing,
-        },
-      );
+      if(isEdit == false) {
+        var formData = FormData.fromMap(
+          {
+            "cover_albums": await MultipartFile.fromFile(
+              albumSave.coverImage?.path ?? '',
+              filename: albumSave.coverImage?.path
+                  .split('/')
+                  .last,
+            ),
+            "file_track": await MultipartFile.fromFile(
+              albumSave.audio?.path ?? '',
+              filename: albumSave.audio?.path,
+            ),
+            "lang_track": albumSave.languageTrackId,
+            "track_title": albumSave.trackTitle,
+            "title_version_track": albumSave.titleVersionTrack,
+            "artis_track": albumSave.artistTrack,
+            "spotify_track": albumSave.spotifyTrack,
+            "itunes_track": albumSave.itunesTrack,
+            "isrc": albumSave.isrc,
+            "rdolyrics": albumSave.rdolyrics,
+            "rdothis_track": albumSave.rdothisTrack,
+            "genre_info": albumSave.genreInfo,
+            "genre2_info": albumSave.genre2Info,
+            "p_copy_info": albumSave.pCopyInfo,
+            "start_time": albumSave.startTime,
+            "label_info": albumSave.labelInfo,
+            "track_ID_info": albumSave.trackIdInfo,
+            "lirik": albumSave.lirik,
+            "con_name": albumSave.conName,
+            "role_track": albumSave.roleTrack,
+            "share": albumSave.share,
+            "publishing": albumSave.publishing,
+          },
+        );
 
-      saveTrack(formData);
+        saveTrack(formData);
+      }else{
+        var formData = FormData.fromMap(
+          {
+            "_method": 'PUT',
+            "cover_albums": (albumSave.coverImage == null)
+                ? null
+                : await MultipartFile.fromFile(
+              albumSave.coverImage?.path ?? '',
+              filename: albumSave.coverImage?.path.split('/').last,
+            ),
+            "file_track": (albumSave.audio == null)
+                ? null
+                : await MultipartFile.fromFile(
+              albumSave.audio?.path ?? '',
+              filename: albumSave.audio?.path,
+            ),
+            "lang_track": albumSave.languageTrackId,
+            "track_title": albumSave.trackTitle,
+            "title_version_track": albumSave.titleVersionTrack,
+            "artis_track": albumSave.artistTrack,
+            "spotify_track": albumSave.spotifyTrack,
+            "itunes_track": albumSave.itunesTrack,
+            "isrc": albumSave.isrc,
+            "rdolyrics": albumSave.rdolyrics,
+            "rdothis_track": albumSave.rdothisTrack,
+            "genre_info": albumSave.genreInfo,
+            "genre2_info": albumSave.genre2Info,
+            "p_copy_info": albumSave.pCopyInfo,
+            "start_time": albumSave.startTime,
+            "label_info": albumSave.labelInfo,
+            "track_ID_info": albumSave.trackIdInfo,
+            "lirik": albumSave.lirik,
+            "con_name": albumSave.conName,
+            "role_track": albumSave.roleTrack,
+            "share": albumSave.share,
+            "publishing": albumSave.publishing,
+          },
+        );
+
+        editTrack(formData);
+      }
     }
   }
 
@@ -561,6 +739,31 @@ class TrackFormState extends ChangeNotifier {
     notifyListeners();
 
     final resStep1 = await HTTPTrack().uploadTrack(
+      data: formData,
+    );
+
+    resStep1.fold(
+          (e) async {
+        isLoading = false;
+        notifyListeners();
+        showFlushBar([e]);
+      },
+          (cat) async {
+        isLoading = false;
+        isCompleted = true;
+        notifyListeners();
+      },
+    );
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void editTrack(FormData formData) async {
+    isLoading = true;
+    notifyListeners();
+
+    final resStep1 = await HTTPTrack().editTrack(
+      id: dataTrackRes?.id??0,
       data: formData,
     );
 
@@ -622,5 +825,114 @@ class TrackFormState extends ChangeNotifier {
             );
           }),
     )..show(context);
+  }
+
+  Widget buildCoverImage({
+    required String editCover,
+    required File? inputCover,
+  }) {
+    if (editCover.isNotEmpty && inputCover == null) {
+      String image = editCover.replaceAll('public', 'storage');
+      String urlImage = '${APP_URL + image}';
+
+      return Container(
+        height: 100,
+        decoration: BoxDecoration(
+          color: CPPrimaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(16),
+          image: DecorationImage(
+            image: NetworkImage(
+              urlImage,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      if (inputCover == null) {
+        return Container(
+          height: 100,
+          decoration: BoxDecoration(
+            color: CPPrimaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Icon(
+            Icons.add,
+            size: 30,
+            color: CPPrimaryColor,
+          ),
+        );
+      } else {
+        return Container(
+          height: 100,
+          decoration: BoxDecoration(
+            color: CPPrimaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+            image: DecorationImage(
+              image: FileImage(
+                inputCover,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  Widget buildAudio(
+      {required String editAudio, required PlatformFile? fileAudio}) {
+    if (editAudio.isNotEmpty && fileAudio == null) {
+      return Container(
+        height: 50,
+        margin: EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          color: CPPrimaryColor,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: vText(
+            '.mp3',
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        height: 50,
+        margin: EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          color: CPPrimaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Icon(
+          Icons.add,
+          size: 30,
+          color: CPPrimaryColor,
+        ),
+      );
+    }
+  }
+
+  String setTextButton({
+    required bool isLastStep,
+    required bool isLoading,
+    required DataTrackRes? dataTrack,
+  }) {
+    if (isLastStep == true) {
+      if (isLoading == true) {
+        return 'Loading...';
+      } else {
+        if (dataTrack != null) {
+          return 'Edit Track';
+        } else {
+          return 'Approve';
+        }
+      }
+    } else {
+      return 'Selanjutnya';
+    }
   }
 }

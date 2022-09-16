@@ -180,7 +180,7 @@ class DetailsTrackPageState extends State<DetailsTrackPage> {
           buildItemTracks(
             context: context,
             title: 'Artist',
-            nama: state.trackRes?.artistName ?? '-',
+            nama: state.trackRes?.artisName ?? '-',
             isAudioItem: false,
           ),
           8.height,

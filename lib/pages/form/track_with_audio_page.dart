@@ -98,26 +98,9 @@ class _TrackWithAudioPageState extends State<TrackWithAudioPage> {
                                 });
                               }
                             },
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: CPPrimaryColor.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(16),
-                                image: (widget.state.coverImage == null)
-                                    ? null
-                                    : DecorationImage(
-                                    image: FileImage(
-                                      widget.state.coverImage!,
-                                    ),
-                                    fit: BoxFit.cover),
-                              ),
-                              child: (widget.state.coverImage == null)
-                                  ? Icon(
-                                Icons.add,
-                                size: 30,
-                                color: CPPrimaryColor,
-                              )
-                                  : Container(),
+                            child: widget.state.buildCoverImage(
+                              editCover: widget.state.coverImageEdit,
+                              inputCover: widget.state.coverImage,
                             ),
                           ),
                         ),
@@ -850,112 +833,65 @@ class _TrackWithAudioPageState extends State<TrackWithAudioPage> {
           children: [
             Expanded(
               flex: 1,
-              child: (widget.state.audio == null)
-                  ? InkWell(
-                      onTap: () async {
-                        PlatformFile? fileAudio =
-                            await widget.state.pilihAudio();
-                        if (fileAudio != null) {
-                          final fileName = fileAudio.name;
-                          final kb = fileAudio.size / 1024;
-                          final mb = kb / 1024;
-                          final fileSize = mb >= 1
-                              ? '${mb.toStringAsFixed(2)} MB'
-                              : '${kb.toStringAsFixed(2)} KB';
+              child: InkWell(
+                onTap: () async {
+                  PlatformFile? fileAudio = await widget.state.pilihAudio();
+                  if (fileAudio != null) {
+                    final fileName = fileAudio.name;
+                    final kb = fileAudio.size / 1024;
+                    final mb = kb / 1024;
+                    final fileSize = mb >= 1
+                        ? '${mb.toStringAsFixed(2)} MB'
+                        : '${kb.toStringAsFixed(2)} KB';
 
-                          setState(() {
-                            widget.state.audio = fileAudio;
-                            widget.state.fileNameAudio = '${fileName}';
-                            widget.state.sizeAudio = fileSize;
-                          });
-                        }
-                      },
-                      child: Container(
-                        height: 50,
-                        margin: EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                          color: CPPrimaryColor.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: CPPrimaryColor,
-                        ),
-                      ),
-                    )
-                  : InkWell(
-                      onTap: () async {
-                        PlatformFile? fileAudio =
-                            await widget.state.pilihAudio();
-                        if (fileAudio != null) {
-                          final fileName = fileAudio.name;
-                          final kb = fileAudio.size / 1024;
-                          final mb = kb / 1024;
-                          final fileSize = mb >= 1
-                              ? '${mb.toStringAsFixed(2)} MB'
-                              : '${kb.toStringAsFixed(2)} KB';
-
-                          setState(() {
-                            widget.state.audio = fileAudio;
-                            widget.state.fileNameAudio = '${fileName}';
-                            widget.state.sizeAudio = fileSize;
-                          });
-                        }
-                      },
-                      child: Container(
-                        height: 50,
-                        margin: EdgeInsets.only(right: 20),
-                        decoration: BoxDecoration(
-                          color: CPPrimaryColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Center(
-                          child: vText(
-                            '.mp3',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                    ),
+                    setState(() {
+                      widget.state.audio = fileAudio;
+                      widget.state.fileNameAudio = '${fileName}';
+                      widget.state.sizeAudio = fileSize;
+                    });
+                  }
+                },
+                child: widget.state.buildAudio(
+                  editAudio: widget.state.audioEdit,
+                  fileAudio: widget.state.audio,
+                ),
+              ),
             ),
             Expanded(
               flex: 2,
               child: (widget.state.audio == null)
                   ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        vText(
-                          "Drag your file here or click to upload",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        vText(
-                          "Stereo WAV file only. Minimum bit depth: 16 bit, sample rate: 44.1 kHz",
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    )
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  vText(
+                    "Drag your file here or click to upload",
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  vText(
+                    "Stereo WAV file only. Minimum bit depth: 16 bit, sample rate: 44.1 kHz",
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ],
+              )
                   : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        vText(
-                          "File name : ${widget.state.fileNameAudio}",
-                          fontSize: 12,
-                          maxLines: 2,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        vText(
-                          "Size : ${widget.state.sizeAudio}",
-                          fontSize: 12,
-                          maxLines: 2,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ],
-                    ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  vText(
+                    "File name : ${widget.state.fileNameAudio}",
+                    fontSize: 12,
+                    maxLines: 2,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  vText(
+                    "Size : ${widget.state.sizeAudio}",
+                    fontSize: 12,
+                    maxLines: 2,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

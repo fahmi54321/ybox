@@ -12,6 +12,7 @@ class ApiUrl {
   static String editAudio = APP_URL + 'api/audio_api/';
   static String saveRingtone = APP_URL + 'api/ringtone_api';
   static String saveTrack = APP_URL + 'api/track_api';
+  static String editTrack = APP_URL + 'api/track_api/';
   static String saveVideo = APP_URL + 'api/video_api';
   static String editVideo = APP_URL + 'api/video_api/';
   static String getAlbum = APP_URL + 'api/album_api';

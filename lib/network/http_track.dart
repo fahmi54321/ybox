@@ -43,6 +43,38 @@ class HTTPTrack {
     }
   }
 
+  Future<Either<String, int>> editTrack({
+    required int id,
+    required FormData data,
+  }) async {
+    print('HTTPTrack start');
+
+    final getUser = gets.Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+
+    final response = await WebService().client().post(
+      ApiUrl.editTrack + id.toString(),
+      data: data,
+      options: Options(headers: {
+        'Authorization': 'Bearer ' + loginRes.access_token,
+        'Accept': 'application/json',
+      }),
+    );
+
+    log('url : ${ApiUrl.editTrack + id.toString()}');
+    log('response : ${response.data}');
+    log('params : ${data.fields}');
+
+
+    if (response.statusCode == 200) {
+      return Right(response.statusCode??0);
+    } else if(response.statusCode == 422){
+      return Left('Audio atau gambar formatnya kurang valid');
+    } else {
+      return Left('Terjadi kesalahan');
+    }
+  }
+
   Future<Either<String, TrackRes>> getTrack({
     required Map<String, dynamic> data,
   }) async {

@@ -10,7 +10,9 @@ import 'package:cloud_storage/network/http_ringtone.dart';
 import 'package:cloud_storage/network/http_track.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
 import 'package:cloud_storage/utils/utils.dart';
+import 'package:cloud_storage/widget/v_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flushbar/flutter_flushbar.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:cloud_storage/utils/shared_pref.dart';
@@ -87,12 +89,6 @@ class TracksFragmentStates extends ChangeNotifier {
       );
     }else if(status == 1){
       return Icon(
-        Icons.close,
-        color: Theme.of(context).colorScheme.error,
-        size: 16,
-      );
-    }else if(status == 2){
-      return Icon(
         Icons.done_outline,
         color: CPGreen,
         size: 16,
@@ -111,12 +107,49 @@ class TracksFragmentStates extends ChangeNotifier {
     if(status == 0){
       return 'Pending';
     }else if(status == 1){
-      return 'Rejected';
-    }else if(status == 2){
-      return 'Done';
+      return 'Approvved';
     }else{
       return 'Pending';
     }
 
+  }
+
+  void showFlushBar(List<String> message) {
+    Flushbar(
+      flushbarPosition: FlushbarPosition.TOP,
+      backgroundColor: Theme.of(context).colorScheme.error,
+      duration: Duration(seconds: 3),
+      titleText: Row(
+        children: [
+          Icon(
+            Icons.add_alert_rounded,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+          SizedBox(width: 5),
+          vText(
+            "Oops...",
+            fontSize: 20,
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.w700,
+          ),
+        ],
+      ),
+      messageText: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: message.length,
+          itemBuilder: (context, index) {
+            String msg = message[index];
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: vText(
+                msg,
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            );
+          }),
+    )..show(context);
   }
 }

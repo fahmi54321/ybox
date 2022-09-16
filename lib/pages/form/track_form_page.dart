@@ -1,3 +1,4 @@
+import 'package:cloud_storage/models/track/track_res.dart';
 import 'package:cloud_storage/pages/form/main_form_state.dart';
 import 'package:cloud_storage/pages/form/track_form_state.dart';
 import 'package:cloud_storage/widget/v_text.dart';
@@ -5,12 +6,21 @@ import 'package:cloud_storage/widget/v_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class ArgsTrackFormPage {
+  DataTrackRes? dataTrackRes;
+
+  ArgsTrackFormPage({
+    this.dataTrackRes,
+  });
+}
 
 class TrackFormPage extends StatefulWidget {
+  ArgsTrackFormPage args;
   static const ROUTE = 'track_form_page';
 
   TrackFormPage({
     Key? key,
+    required this.args,
   }) : super(key: key);
 
   @override
@@ -21,7 +31,7 @@ class _TrackFormPageState extends State<TrackFormPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => TrackFormState(context,),
+      create: (_) => TrackFormState(context: context,dataTrackRes: widget.args.dataTrackRes,),
       child: Consumer(
         builder: (BuildContext context, TrackFormState state, _) {
           return Scaffold(

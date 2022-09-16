@@ -90,7 +90,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case TrackFormPage.ROUTE:
       return MaterialPageRoute(
-        builder: (context) => TrackFormPage(),
+        builder: (context) => TrackFormPage(args: settings.arguments as ArgsTrackFormPage,),
       );
 
     case DetailsTrackPage.ROUTE:
