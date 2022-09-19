@@ -3,6 +3,7 @@ import 'package:cloud_storage/models/general/bank_res.dart';
 import 'package:cloud_storage/models/general/genre_res.dart';
 import 'package:cloud_storage/models/general/label_res.dart';
 import 'package:cloud_storage/models/general/language_res.dart';
+import 'package:cloud_storage/models/general/profile_res.dart';
 import 'package:cloud_storage/models/general/publishing_res.dart';
 import 'package:cloud_storage/models/general/roles_res.dart';
 import 'package:cloud_storage/models/login_res.dart';
@@ -44,11 +45,11 @@ class HTTPGeneral {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.genre,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.genre,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
 
     if (response.statusCode == 200) {
       final result = (response.data as List<dynamic>)
@@ -68,11 +69,11 @@ class HTTPGeneral {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.label,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.label,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
 
     if (response.statusCode == 200) {
       final result = (response.data as List<dynamic>)
@@ -92,11 +93,11 @@ class HTTPGeneral {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.roles,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.roles,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
 
     if (response.statusCode == 200) {
       final result = (response.data as List<dynamic>)
@@ -116,11 +117,11 @@ class HTTPGeneral {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.publishing,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.publishing,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
 
     if (response.statusCode == 200) {
       final result = (response.data as List<dynamic>)
@@ -140,11 +141,11 @@ class HTTPGeneral {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.getBank,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.getBank,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
 
     if (response.statusCode == 200) {
       final result = (response.data as List<dynamic>)
@@ -157,4 +158,24 @@ class HTTPGeneral {
     }
   }
 
+  Future<Either<String, ProfileRes>> getProfile({required String token}) async {
+    print('HTTPProfileService start');
+    final response = await WebService().client().get(
+          ApiUrl.profile,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + token,
+          }),
+        );
+    print('url : ${ApiUrl.profile}');
+    print(response);
+
+    if (response.statusCode == 200) {
+      final result = ProfileRes.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      return Right(result);
+    } else {
+      return Left('Terjadi kesalahan' as String);
+    }
+  }
 }

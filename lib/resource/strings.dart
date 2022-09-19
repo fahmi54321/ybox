@@ -1,6 +1,6 @@
 //TODO SERVER DEV
-// const String APP_URL = "http://hyjoe.masuk.web.id/ybox/public/";
-const String APP_URL = "http://192.168.43.19:8000/";
+const String APP_URL = "http://hyjoe.masuk.web.id/ybox/public/";
+// const String APP_URL = "http://192.168.1.18:8000/";
 // TODO SERVER SANBOX
 // const String APP_URL = "";
 
@@ -13,6 +13,7 @@ const String PREFERENCE_FCM = 'PREFERENCE_FCM';
 const String PREFERENCE_TOKEN = "token";
 const String PREFERENCE_NAME = "name";
 const String PREFERENCE_LOGIN_DATA = "name";
+const String PREFERENCE_PROFILE_DATA = "PREFERENCE_PROFILE_DATA";
 const String PREFERENCE_EMAIL = "email";
 const String PREFERENCE_PHONE = "phone";
 const String PREFERENCE_DATE_BORN = "date";

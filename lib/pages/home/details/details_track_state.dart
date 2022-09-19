@@ -10,6 +10,7 @@ import 'package:cloud_storage/network/http_album.dart';
 import 'package:cloud_storage/network/http_ringtone.dart';
 import 'package:cloud_storage/network/http_track.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
+import 'package:cloud_storage/resource/strings.dart';
 import 'package:cloud_storage/utils/utils.dart';
 import 'package:cloud_storage/widget/v_text.dart';
 import 'package:dio/dio.dart';
@@ -172,6 +173,36 @@ class DetailsTracksState extends ChangeNotifier {
             );
           }),
     )..show(context);
+  }
+
+  Widget buildCoverImage({
+    required String urlImages,
+    required double width,
+  }) {
+    if (urlImages.isEmpty) {
+      return Container(
+        height: MediaQuery.of(context).size.height / 3,
+        child: Icon(
+          Icons.broken_image,
+          size: 30,
+          color: CPPrimaryColor,
+        ),
+      );
+    } else {
+
+      String image = urlImages.replaceAll('public', 'storage');
+      String urlImage = '${APP_URL + image}';
+
+      return Container(
+        height: MediaQuery.of(context).size.height / 3,
+        child: Image.network(
+          urlImage,
+          width: width,
+          height: width * 1.05,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
   }
 
 }

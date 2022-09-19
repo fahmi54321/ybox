@@ -8,33 +8,22 @@ import 'package:cloud_storage/pages/home/details/details_page.dart';
 import 'package:cloud_storage/pages/home/details/details_track_page.dart';
 import 'package:cloud_storage/pages/home/details/details_video_page.dart';
 import 'package:cloud_storage/pages/home/home_page.dart';
-import 'package:cloud_storage/pages/home/search_page.dart';
 import 'package:cloud_storage/pages/login/login_page.dart';
 import 'package:cloud_storage/pages/profil/profil_page.dart';
 import 'package:cloud_storage/pages/profil/ubah_password_page.dart';
-import 'package:cloud_storage/pages/splash_page.dart';
 import 'package:cloud_storage/pages/upload/upload_album_page.dart';
 import 'package:cloud_storage/pages/upload/upload_audio_page.dart';
 import 'package:cloud_storage/pages/upload/upload_video_page.dart';
-import 'package:cloud_storage/pages/walk_through_page/walk_through_page.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case SplashPage.ROUTE:
-      return MaterialPageRoute(builder: (context) => SplashPage());
-
-    case WalkThrougPage.ROUTE:
-      return MaterialPageRoute(builder: (context) => WalkThrougPage());
 
     case LoginPage.ROUTE:
       return MaterialPageRoute(builder: (context) => LoginPage());
 
     case HomePage.ROUTE:
       return MaterialPageRoute(builder: (context) => HomePage());
-
-    case SearchPage.ROUTE:
-      return MaterialPageRoute(builder: (context) => SearchPage());
 
     case UploadAlbumPage.ROUTE:
       return MaterialPageRoute(builder: (context) => UploadAlbumPage());
@@ -106,6 +95,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     default:
       //statements;
-      return MaterialPageRoute(builder: (context) => SplashPage());
+      return MaterialPageRoute(builder: (context) => LoginPage());
   }
 }

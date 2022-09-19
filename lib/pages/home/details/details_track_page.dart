@@ -232,14 +232,9 @@ class DetailsTrackPageState extends State<DetailsTrackPage> {
   }
 
   Widget buildImageCover(double width) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      child: Image.asset(
-        "images/shophop/ic_walk.jpeg",
-        width: width,
-        height: width * 1.05,
-        fit: BoxFit.cover,
-      ),
+    return state.buildCoverImage(
+      urlImages: state.trackRes?.image??'',
+      width: width,
     );
   }
 }

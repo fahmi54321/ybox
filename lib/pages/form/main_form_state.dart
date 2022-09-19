@@ -777,7 +777,7 @@ class MainFormState extends ChangeNotifier {
       (cat) async {
         listLanguage = cat;
 
-        if (dataAlbumRes != null) {
+        if (dataAlbumRes != null || dataVideoRes != null || dataAudioRes != null) {
           // edit
           if (dataAlbumRes?.langId != null) {
             languageResMain = LanguageRes(
@@ -787,6 +787,24 @@ class MainFormState extends ChangeNotifier {
             languageResTrack = LanguageRes(
               id: dataAlbumRes?.langId?.id ?? 0,
               name: dataAlbumRes?.langId?.name ?? '',
+            );
+          }else if (dataVideoRes?.langId != null) {
+            languageResMain = LanguageRes(
+              id: dataVideoRes?.langId?.id ?? 0,
+              name: dataVideoRes?.langId?.name ?? '',
+            );
+            languageResTrack = LanguageRes(
+              id: dataVideoRes?.langId?.id ?? 0,
+              name: dataVideoRes?.langId?.name ?? '',
+            );
+          } else if (dataAudioRes?.langId != null) {
+            languageResMain = LanguageRes(
+              id: dataAudioRes?.langId?.id ?? 0,
+              name: dataAudioRes?.langId?.name ?? '',
+            );
+            languageResTrack = LanguageRes(
+              id: dataAudioRes?.langId?.id ?? 0,
+              name: dataAudioRes?.langId?.name ?? '',
             );
           } else {
             languageResMain = cat[0];
@@ -825,19 +843,40 @@ class MainFormState extends ChangeNotifier {
       (cat) async {
         listGenre = cat;
 
-        if (dataAlbumRes != null) {
+        if (dataAlbumRes != null || dataVideoRes != null || dataAudioRes != null) {
           if (dataAlbumRes?.genre1 != null) {
             genreRes1Main = genre.GenreRes(
               id: dataAlbumRes?.genre1?.id ?? 0,
               name: dataAlbumRes?.genre1?.name ?? '',
             );
+          }else if (dataVideoRes?.genre1 != null) {
+            genreRes1Main = genre.GenreRes(
+              id: dataVideoRes?.genre1?.id ?? 0,
+              name: dataVideoRes?.genre1?.name ?? '',
+            );
+          } else if (dataAudioRes?.genre1 != null) {
+            genreRes1Main = genre.GenreRes(
+              id: dataAudioRes?.genre1?.id ?? 0,
+              name: dataAudioRes?.genre1?.name ?? '',
+            );
           } else {
             genreRes1Main = cat[0];
           }
+
           if (dataAlbumRes?.genre2 != null) {
             genreRes2Main = genre.GenreRes(
               id: dataAlbumRes?.genre2?.id ?? 0,
               name: dataAlbumRes?.genre2?.name ?? '',
+            );
+          }else if (dataVideoRes?.genre2 != null) {
+            genreRes2Main = genre.GenreRes(
+              id: dataVideoRes?.genre2?.id ?? 0,
+              name: dataVideoRes?.genre2?.name ?? '',
+            );
+          }else if (dataAudioRes?.genre2 != null) {
+            genreRes2Main = genre.GenreRes(
+              id: dataAudioRes?.genre2?.id ?? 0,
+              name: dataAudioRes?.genre2?.name ?? '',
             );
           } else {
             genreRes2Main = cat[0];
@@ -848,6 +887,16 @@ class MainFormState extends ChangeNotifier {
               id: dataAlbumRes?.trackId?.genre1?.id ?? 0,
               name: dataAlbumRes?.trackId?.genre1?.name ?? '',
             );
+          } else if (dataVideoRes?.trackId?.genre1 != null) {
+            genreRes1Tracks = genre.GenreRes(
+              id: dataVideoRes?.trackId?.genre1?.id ?? 0,
+              name: dataVideoRes?.trackId?.genre1?.name ?? '',
+            );
+          } else if (dataAudioRes?.trackId?.genre1 != null) {
+            genreRes1Tracks = genre.GenreRes(
+              id: dataAudioRes?.trackId?.genre1?.id ?? 0,
+              name: dataAudioRes?.trackId?.genre1?.name ?? '',
+            );
           } else {
             genreRes1Tracks = cat[0];
           }
@@ -856,6 +905,16 @@ class MainFormState extends ChangeNotifier {
             genreRes2Tracks = genre.GenreRes(
               id: dataAlbumRes?.trackId?.genre2?.id ?? 0,
               name: dataAlbumRes?.trackId?.genre2?.name ?? '',
+            );
+          } else if (dataVideoRes?.trackId?.genre2 != null) {
+            genreRes2Tracks = genre.GenreRes(
+              id: dataVideoRes?.trackId?.genre2?.id ?? 0,
+              name: dataVideoRes?.trackId?.genre2?.name ?? '',
+            );
+          } else if (dataAudioRes?.trackId?.genre2 != null) {
+            genreRes2Tracks = genre.GenreRes(
+              id: dataAudioRes?.trackId?.genre2?.id ?? 0,
+              name: dataAudioRes?.trackId?.genre2?.name ?? '',
             );
           } else {
             genreRes2Tracks = cat[0];
@@ -893,11 +952,13 @@ class MainFormState extends ChangeNotifier {
       },
       (cat) async {
         listLabel = cat;
-        if ((dataAlbumRes?.trackId?.labelName ?? '').isNotEmpty) {
-          tracksLabel = dataAlbumRes?.trackId?.labelName ?? '';
-        } else {
-          tracksLabel = cat[0].nama;
-        }
+        // if ((dataAlbumRes?.trackId?.labelName ?? '').isNotEmpty) {
+        //   tracksLabel = dataAlbumRes?.trackId?.labelName ?? '';
+        // } else {
+        //   tracksLabel = cat[0].nama;
+        // }
+
+        tracksLabel = cat[0].nama;
 
         log('label name : ${tracksLabel}');
 
@@ -930,6 +991,10 @@ class MainFormState extends ChangeNotifier {
         listRole = cat;
         if (dataAlbumRes?.trackId?.contributor?.roleTrack != null) {
           pubRoles = dataAlbumRes?.trackId?.contributor?.roleTrack;
+        } else if (dataVideoRes?.trackId?.contributor?.roleTrack != null) {
+          pubRoles = dataVideoRes?.trackId?.contributor?.roleTrack;
+        } else if (dataAudioRes?.trackId?.contributor?.roleTrack != null) {
+          pubRoles = dataAudioRes?.trackId?.contributor?.roleTrack;
         } else {
           pubRoles = cat[0];
         }
@@ -962,6 +1027,10 @@ class MainFormState extends ChangeNotifier {
         listPublishing = cat;
         if (dataAlbumRes?.trackId?.contributor?.publising != null) {
           pubPublishings = dataAlbumRes?.trackId?.contributor?.publising;
+        } else if (dataVideoRes?.trackId?.contributor?.publising != null) {
+          pubPublishings = dataVideoRes?.trackId?.contributor?.publising;
+        } else if (dataAudioRes?.trackId?.contributor?.publising != null) {
+          pubPublishings = dataAudioRes?.trackId?.contributor?.publising;
         } else {
           pubPublishings = cat[0];
         }
@@ -1055,20 +1124,20 @@ class MainFormState extends ChangeNotifier {
                 albumSave.coverImage?.path ?? '',
                 filename: albumSave.coverImage?.path.split('/').last,
               ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "artis": mainInputArtist.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
               "file_track": await MultipartFile.fromFile(
                 albumSave.audio?.path ?? '',
                 filename: albumSave.audio?.path,
@@ -1106,26 +1175,24 @@ class MainFormState extends ChangeNotifier {
                       albumSave.coverImage?.path ?? '',
                       filename: albumSave.coverImage?.path.split('/').last,
                     ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "artis": mainInputArtist.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
-              "file_track": (albumSave.audio == null)
-                  ? null
-                  : await MultipartFile.fromFile(
-                      albumSave.audio?.path ?? '',
-                      filename: albumSave.audio?.path,
-                    ),
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
+              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
+                albumSave.audio?.path ?? '',
+                filename: albumSave.audio?.path,
+              ),
               "lang_track": albumSave.languageTrackId,
               "track_title": albumSave.trackTitle,
               "title_version_track": albumSave.titleVersionTrack,
@@ -1162,19 +1229,20 @@ class MainFormState extends ChangeNotifier {
                     .split('/')
                     .last,
               ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
               "file_track": await MultipartFile.fromFile(
                 albumSave.audio?.path ?? '',
                 filename: albumSave.audio?.path,
@@ -1192,6 +1260,8 @@ class MainFormState extends ChangeNotifier {
               "genre2_info": albumSave.genre2Info,
               "p_copy_info": albumSave.pCopyInfo,
               "start_time": albumSave.startTime,
+              "label_info": albumSave.labelInfo,
+              "track_ID_info": albumSave.trackIdInfo,
               "lirik": albumSave.lirik,
               "con_name": albumSave.conName,
               "role_track": albumSave.roleTrack,
@@ -1211,22 +1281,21 @@ class MainFormState extends ChangeNotifier {
                 albumSave.coverImage?.path ?? '',
                 filename: albumSave.coverImage?.path.split('/').last,
               ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
-              "file_track": (albumSave.audio == null)
-                  ? null
-                  : await MultipartFile.fromFile(
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
+              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
                 albumSave.audio?.path ?? '',
                 filename: albumSave.audio?.path,
               ),
@@ -1243,6 +1312,8 @@ class MainFormState extends ChangeNotifier {
               "genre2_info": albumSave.genre2Info,
               "p_copy_info": albumSave.pCopyInfo,
               "start_time": albumSave.startTime,
+              "label_info": albumSave.labelInfo,
+              "track_ID_info": albumSave.trackIdInfo,
               "lirik": albumSave.lirik,
               "con_name": albumSave.conName,
               "role_track": albumSave.roleTrack,
@@ -1264,19 +1335,20 @@ class MainFormState extends ChangeNotifier {
                     .split('/')
                     .last,
               ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
               "file_track": await MultipartFile.fromFile(
                 albumSave.audio?.path ?? '',
                 filename: albumSave.audio?.path,
@@ -1294,6 +1366,8 @@ class MainFormState extends ChangeNotifier {
               "genre2_info": albumSave.genre2Info,
               "p_copy_info": albumSave.pCopyInfo,
               "start_time": albumSave.startTime,
+              "label_info": albumSave.labelInfo,
+              "track_ID_info": albumSave.trackIdInfo,
               "lirik": albumSave.lirik,
               "con_name": albumSave.conName,
               "role_track": albumSave.roleTrack,
@@ -1313,22 +1387,21 @@ class MainFormState extends ChangeNotifier {
                 albumSave.coverImage?.path ?? '',
                 filename: albumSave.coverImage?.path.split('/').last,
               ),
-              "lang": languageResMain?.id.toString(),
-              "release_title": mainInputTitleRelease.text,
-              "title_version": mainInputTitleVersion.text,
-              "spotify": mainInputArtistSpotify.text,
-              "itunes": mainInputArtistApple.text,
-              "genre": genreRes1Main?.id.toString(),
-              "genre2": genreRes2Main?.id.toString(),
-              "p_copy": mainInputCopyrightP.text,
-              "c_copy": mainInputCopyrightC.text,
-              "release": inputPrevReleased.text,
-              "label": inputLabelName.text,
-              "release_id": inputReleaseId.text,
-              "upc": inputUpc.text,
-              "file_track": (albumSave.audio == null)
-                  ? null
-                  : await MultipartFile.fromFile(
+              "lang": albumSave.languageId,
+              "release_title": albumSave.releaseTitle,
+              "title_version": albumSave.titleVersion,
+              "artis": albumSave.artist,
+              "spotify": albumSave.spotify,
+              "itunes": albumSave.itunes,
+              "genre": albumSave.genre,
+              "genre2": albumSave.genre2,
+              "p_copy": albumSave.pCopy,
+              "c_copy": albumSave.cCopy,
+              "release": albumSave.release,
+              "label": albumSave.label,
+              "release_id": albumSave.releaseId,
+              "upc": albumSave.upc,
+              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
                 albumSave.audio?.path ?? '',
                 filename: albumSave.audio?.path,
               ),
@@ -1345,6 +1418,8 @@ class MainFormState extends ChangeNotifier {
               "genre2_info": albumSave.genre2Info,
               "p_copy_info": albumSave.pCopyInfo,
               "start_time": albumSave.startTime,
+              "label_info": albumSave.labelInfo,
+              "track_ID_info": albumSave.trackIdInfo,
               "lirik": albumSave.lirik,
               "con_name": albumSave.conName,
               "role_track": albumSave.roleTrack,
@@ -1491,6 +1566,8 @@ class MainFormState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
+    log('id video : ${dataVideoRes?.id ?? 0}');
+
     final resStep1 = await HTTPVideo().editVideo(
       id: dataVideoRes?.id ?? 0,
       data: formData,
@@ -1611,7 +1688,7 @@ class MainFormState extends ChangeNotifier {
 
   Widget buildAudio(
       {required String editAudio, required PlatformFile? fileAudio}) {
-    if (editAudio.isNotEmpty && fileAudio == null) {
+    if (editAudio.isNotEmpty || fileAudio != null) {
       return Container(
         height: 50,
         margin: EdgeInsets.only(right: 20),

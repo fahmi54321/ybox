@@ -9,7 +9,7 @@ class ApiUrl {
   static String publishing = APP_URL + 'api/publishing';
   static String saveAlbum = APP_URL + 'api/album_api';
   static String editAlbum = APP_URL + 'api/album_api/';
-  static String editAudio = APP_URL + 'api/audio_api/';
+  static String editAudio = APP_URL + 'api/ringtone_api/';
   static String saveRingtone = APP_URL + 'api/ringtone_api';
   static String saveTrack = APP_URL + 'api/track_api';
   static String editTrack = APP_URL + 'api/track_api/';
@@ -34,4 +34,5 @@ class ApiUrl {
   static String saveTransaction = APP_URL + 'api/transaction_api';
   static String getTransaction = APP_URL + 'api/transaction_api';
   static String detailsTransaction = APP_URL + 'api/transaction/';
+  static String profile = APP_URL + 'api/profile';
 }

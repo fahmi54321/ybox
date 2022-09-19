@@ -1,11 +1,10 @@
 import 'package:cloud_storage/pages/home/fragment/album_fragment.dart';
 import 'package:cloud_storage/pages/home/fragment/audio_fragment.dart';
 import 'package:cloud_storage/pages/home/fragment/home_fragment.dart';
-import 'package:cloud_storage/pages/home/fragment/profile_fragment.dart';
 import 'package:cloud_storage/pages/home/fragment/track_fragment.dart';
 import 'package:cloud_storage/pages/home/fragment/transaction_fragment.dart';
 import 'package:cloud_storage/pages/home/fragment/video_fragment.dart';
-import 'package:cloud_storage/pages/home/search_page.dart';
+import 'package:cloud_storage/pages/home/home_state.dart';
 import 'package:cloud_storage/pages/profil/profil_page.dart';
 import 'package:cloud_storage/pages/upload/pop_up_pilih_form_kategori.dart';
 import 'package:cloud_storage/widget/v_text.dart';
@@ -14,7 +13,7 @@ import 'package:cloud_storage/main.dart';
 import 'package:cloud_storage/utils/ShColors.dart';
 import 'package:cloud_storage/utils/ShConstant.dart';
 import 'package:cloud_storage/utils/ShImages.dart';
-import 'package:cloud_storage/utils/ShStrings.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static const ROUTE = 'home_page';
@@ -56,103 +55,115 @@ class HomePageState extends State<HomePage> {
 
     var width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-            color: appStore.isDarkModeOn
-                ? Theme.of(context).colorScheme.onPrimary
-                : sh_textColorPrimary),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search,
+    return ChangeNotifierProvider(
+      create: (_) => HomeState(context),
+      child: Consumer(
+        builder: (BuildContext context, HomeState state, _) {
+          return Scaffold(
+            appBar: AppBar(
+              iconTheme: IconThemeData(
                 color: appStore.isDarkModeOn
                     ? Theme.of(context).colorScheme.onPrimary
-                    : sh_textColorPrimary),
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE);
-            },
-          )
-        ],
-        title: vText('Home', fontSize: 22, fontWeight: FontWeight.w500),
-      ),
-      body: Stack(
-        alignment: Alignment.bottomLeft,
-        children: [
-          buildFragment(),
-          buildBottomBar(width, context),
-        ],
-      ),
-      drawer: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.85,
-        height: MediaQuery.of(context).size.height,
-        child: Drawer(
-          elevation: 8,
-          child: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: appStore.isDarkModeOn
-                  ? Colors.grey
-                  : Theme.of(context).colorScheme.onPrimary,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      Center(
-                        child: Padding(
-                            padding:
-                                EdgeInsets.only(top: 60, right: spacing_large),
-                            child: Column(
-                              children: <Widget>[
-                                Card(
-                                  semanticContainer: true,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  elevation: spacing_standard,
-                                  margin: EdgeInsets.all(spacing_control),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(100.0)),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(4.0),
-                                    child: CircleAvatar(
-                                        backgroundImage: AssetImage(ic_user),
-                                        radius: 55),
-                                  ),
-                                ),
-                                SizedBox(height: spacing_middle),
-                                vText(
-                                  'User',
-                                  color: appStore.isDarkModeOn
-                                      ? Theme.of(context).colorScheme.onPrimary
-                                      : sh_textColorPrimary,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ],
-                            )),
-                      ),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: spacing_standard_new, top: 30),
-                              child: Icon(Icons.clear)))
-                    ],
+                    : sh_textColorPrimary,
+              ),
+              title: vText('Home', fontSize: 22, fontWeight: FontWeight.w500),
+            ),
+            body: Stack(
+              alignment: Alignment.bottomLeft,
+              children: [
+                buildFragment(),
+                buildBottomBar(width, context),
+              ],
+            ),
+            drawer: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height,
+              child: Drawer(
+                elevation: 8,
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    color: appStore.isDarkModeOn
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.onPrimary,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Stack(
+                          children: <Widget>[
+                            Center(
+                              child: Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 60, right: spacing_large),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Card(
+                                        semanticContainer: true,
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        elevation: spacing_standard,
+                                        margin: EdgeInsets.all(spacing_control),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(100.0)),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(4.0),
+                                          child: (state.urlImage.isEmpty)
+                                              ? CircleAvatar(
+                                                  backgroundImage: AssetImage(
+                                                    ic_user,
+                                                  ),
+                                                  radius: 55,
+                                                )
+                                              : CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                    state.urlImage,
+                                                  ),
+                                                  radius: 55,
+                                                ),
+                                        ),
+                                      ),
+                                      SizedBox(height: spacing_middle),
+                                      vText(
+                                        '${state.profileRes.firstName} ${state.profileRes.lastName}',
+                                        color: appStore.isDarkModeOn
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .onPrimary
+                                            : sh_textColorPrimary,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: spacing_standard_new, top: 30),
+                                    child: Icon(Icons.clear)))
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        getDrawerItem(Icons.lock, 'Ubah Password',
+                            Theme.of(context).colorScheme.primary,
+                            callback: () {
+                          Navigator.pushNamed(context, ProfilPage.ROUTE);
+                        }),
+                        getDrawerItem(Icons.logout, 'Keluar',
+                            Theme.of(context).colorScheme.error, callback: () {
+                          // ShSettingsScreen().launch(context);
+                        }),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 20),
-                  getDrawerItem(sh_user_placeholder, sh_lbl_account,
-                      callback: () {
-                    Navigator.pushNamed(context, ProfilPage.ROUTE);
-                  }),
-                  getDrawerItem(sh_settings, sh_lbl_settings, callback: () {
-                    // ShSettingsScreen().launch(context);
-                  }),
-                  SizedBox(height: 20),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -193,7 +204,8 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getDrawerItem(String? icon, String? name, {VoidCallback? callback}) {
+  Widget getDrawerItem(IconData icon, String? name, Color iconColor,
+      {VoidCallback? callback}) {
     return InkWell(
       onTap: callback,
       child: Container(
@@ -201,14 +213,11 @@ class HomePageState extends State<HomePage> {
         padding: EdgeInsets.fromLTRB(20, 14, 20, 14),
         child: Row(
           children: <Widget>[
-            icon != null
-                ? Image.asset(icon,
-                    width: 20,
-                    height: 20,
-                    color: appStore.isDarkModeOn
-                        ? Theme.of(context).colorScheme.onPrimary
-                        : Colors.black)
-                : Container(width: 20),
+            Icon(
+              icon,
+              size: 20,
+              color: iconColor,
+            ),
             SizedBox(width: 20),
             vText(
               name ?? '',

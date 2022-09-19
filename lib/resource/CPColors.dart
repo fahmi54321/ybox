@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const CPPrimaryColor = Color(0xFFf17015);
-const CPSecondaryColor = Color(0xFFf17015);
+const CPPrimaryColor = Color(0xFF0096A1);
+const CPSecondaryColor = Color(0xFF0096A1);
 const CPScaffoldDarkColor = Color(0xff1b242d);
 const CPButtonColor = Color(0xffE6EEFB);
 const CPContainerBgColor = Color(0xffEAF2FF);

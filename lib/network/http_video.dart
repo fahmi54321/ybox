@@ -61,7 +61,7 @@ class HTTPVideo {
       }),
     );
 
-    log('url : ${ApiUrl.editVideo}');
+    log('url : ${ApiUrl.editVideo + id.toString()}');
     log('response : ${response.data}');
     log('params : ${data.fields}');
 

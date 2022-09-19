@@ -882,7 +882,7 @@ class TrackFormState extends ChangeNotifier {
 
   Widget buildAudio(
       {required String editAudio, required PlatformFile? fileAudio}) {
-    if (editAudio.isNotEmpty && fileAudio == null) {
+    if (editAudio.isNotEmpty && fileAudio != null) {
       return Container(
         height: 50,
         margin: EdgeInsets.only(right: 20),

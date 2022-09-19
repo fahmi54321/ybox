@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_storage/models/general/profile_res.dart';
 import 'package:cloud_storage/models/login_res.dart';
 import 'package:cloud_storage/resource/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,11 @@ class SharedPreferencesUtils {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(PREFERENCE_TOKEN, data.access_token);
     prefs.setString(PREFERENCE_LOGIN_DATA, jsonEncode(data));
+  }
+
+  static Future saveProfilePreference(ProfileRes data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(PREFERENCE_PROFILE_DATA, jsonEncode(data));
   }
 
   static Future<LoginRes?> getUserPreference() async {
@@ -39,21 +45,11 @@ class SharedPreferencesUtils {
     return data;
   }
 
-  // static Future saveFCMToken(String token) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   print("token Saved " + token);
-  //   prefs.setString(PREFERENCE_FCM, token ?? "");
+  static Future<String?> getProfilePreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  // }
-
-  // static Future<String?> getTokenPreference() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString(PREFERENCE_TOKEN);
-  // }
-
-  // static Future removeTokenPreference() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString(PREFERENCE_TOKEN, '');
-  // }
+    var data = await prefs.getString(PREFERENCE_PROFILE_DATA);
+    return data;
+  }
 
 }

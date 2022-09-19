@@ -1,3 +1,5 @@
+import 'package:cloud_storage/models/login_res.dart';
+import 'package:cloud_storage/network/http_general.dart';
 import 'package:cloud_storage/network/http_login.dart';
 import 'package:cloud_storage/pages/home/home_page.dart';
 import 'package:cloud_storage/utils/shared_pref.dart';
@@ -48,7 +50,7 @@ class LoginState extends ChangeNotifier {
 
       notifyListeners();
       resStep1.fold(
-            (e) async {
+        (e) async {
           isLoading = false;
           notifyListeners();
           await VUtils.showDefaultAlertDialog(
@@ -57,15 +59,40 @@ class LoginState extends ChangeNotifier {
             message: e,
           );
         },
-            (cat) async {
-          // save user
-          await SharedPreferencesUtils.saveLoginPreference(cat);
-          Navigator.pushReplacementNamed(context, HomePage.ROUTE);
+        (cat) async {
+          getProfile(cat);
         },
       );
     }
-    isLoading = false;
-    notifyListeners();
   }
 
+  void getProfile(LoginRes loginRes) async {
+    isLoading = true;
+    notifyListeners();
+
+    final resStep1 = await HTTPGeneral().getProfile(
+      token: loginRes.access_token,
+    );
+    isLoading = false;
+
+    notifyListeners();
+    resStep1.fold(
+      (e) async {
+        isLoading = false;
+        notifyListeners();
+        await VUtils.showDefaultAlertDialog(
+          context,
+          title: "Login Failed!",
+          message: e,
+        );
+      },
+      (cat) async {
+        // save user
+        await SharedPreferencesUtils.saveLoginPreference(loginRes);
+        // save profile
+        await SharedPreferencesUtils.saveProfilePreference(cat);
+        Navigator.pushReplacementNamed(context, HomePage.ROUTE);
+      },
+    );
+  }
 }
