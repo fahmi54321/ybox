@@ -108,7 +108,7 @@ class DetailsVideoPageState extends State<DetailsVideoPage> {
           buildItemOverview(
             context: context,
             title: 'Label name',
-            nama: state.videoRes?.labelName ?? '-',
+            nama: state.videoRes?.labelName?.nama ?? '-',
           ),
           8.height,
           buildItemOverview(

@@ -13,16 +13,16 @@ _$_LabelRes _$$_LabelResFromJson(Map json) => $checkedCreate(
         final val = _$_LabelRes(
           id: $checkedConvert('id', (v) => v as int? ?? 0),
           nama: $checkedConvert('nama', (v) => v as String? ?? ''),
-          labelCode: $checkedConvert('label_code', (v) => v as int? ?? 0),
+          labelCode: $checkedConvert('label', (v) => v as int? ?? 0),
         );
         return val;
       },
-      fieldKeyMap: const {'labelCode': 'label_code'},
+      fieldKeyMap: const {'labelCode': 'label'},
     );
 
 Map<String, dynamic> _$$_LabelResToJson(_$_LabelRes instance) =>
     <String, dynamic>{
       'id': instance.id,
       'nama': instance.nama,
-      'label_code': instance.labelCode,
+      'label': instance.labelCode,
     };

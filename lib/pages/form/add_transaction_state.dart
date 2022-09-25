@@ -41,7 +41,7 @@ class AddTransactionState extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final resStep1 = await HTTPGeneral().getLabel();
+    final resStep1 = await HTTPGeneral().getLabelTransaksi();
     isLoading = false;
 
     notifyListeners();
@@ -129,7 +129,7 @@ class AddTransactionState extends ChangeNotifier {
           "bank_name": selectBank?.id.toString(),
           "acc_num": accNumberInputName.text.toString(),
           "name_on_bank": accNameInputName.text.toString(),
-          "label": selectLabel?.id.toString(),
+          "label": selectLabel?.labelCode.toString(),
           "id": loginRes.id.toString(),
         },
       );
@@ -156,7 +156,7 @@ class AddTransactionState extends ChangeNotifier {
         isLoadingButton = false;
         notifyListeners();
 
-        Navigator.of(context);
+        Navigator.pop(context);
         Navigator.pushNamed(
           context,
           BerhasilPage.ROUTE,

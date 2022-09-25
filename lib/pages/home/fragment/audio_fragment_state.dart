@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:cloud_storage/controllers/user_controller.dart';
 import 'package:cloud_storage/models/album/album_res.dart';
 import 'package:cloud_storage/models/audio/audio_res.dart';
 import 'package:cloud_storage/models/login_res.dart';
@@ -11,6 +12,7 @@ import 'package:cloud_storage/utils/utils.dart';
 import 'package:cloud_storage/widget/v_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flushbar/flutter_flushbar.dart';
+import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:cloud_storage/utils/shared_pref.dart';
@@ -42,8 +44,13 @@ class RingtoneFragmentState extends ChangeNotifier {
   Future<void> getAudio(int page) async {
     log("getAudio $page");
 
+    final getUser = Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+    notifyListeners();
+
     Map<String, dynamic> data = {
       'page': page,
+      'id' : loginRes.id,
     };
     try {
       final resStep1 = await HTTPRingtone().getRingtone(

@@ -160,6 +160,7 @@ class MainFormState extends ChangeNotifier {
   bool isLoadingLanguage = false;
   bool isLoadingGenre = false;
   bool isLoadingLabel = false;
+  bool isLoadingLabelReq = false;
   bool isLoadingRole = false;
   bool isLoadingPublishing = false;
   List<String> rulesOfImage = [
@@ -182,7 +183,7 @@ class MainFormState extends ChangeNotifier {
   LanguageRes? languageResMain;
   List<LanguageRes> listLanguage = [];
   List<genre.GenreRes> listGenre = [];
-  List<LabelRes> listLabel = [];
+  List<LabelRes> listLabelReq = [];
   List<RolesRes> listRole = [];
   List<PublishingRes> listPublishing = [];
 
@@ -210,7 +211,8 @@ class MainFormState extends ChangeNotifier {
   TextEditingController mainInputCopyrightC = TextEditingController();
   TextEditingController inputRecordLabel = TextEditingController();
   TextEditingController inputPrevReleased = TextEditingController();
-  TextEditingController inputLabelName = TextEditingController();
+
+  // TextEditingController inputLabelName = TextEditingController();
   TextEditingController inputReleaseId = TextEditingController();
   TextEditingController inputUpc = TextEditingController();
   int yesInputPrevRelease = 1;
@@ -222,6 +224,7 @@ class MainFormState extends ChangeNotifier {
   int selectInputPrevRelease = 0;
   int selectInputLabel = 0;
   int selectInputUPC = 0;
+  LabelRes mainLabel = LabelRes(id: 0, nama: '', labelCode: 0);
 
   //tracks
   genre.GenreRes? genreRes1Tracks;
@@ -258,7 +261,6 @@ class MainFormState extends ChangeNotifier {
   TextEditingController tracksInputExplicitLyrics = TextEditingController();
   String tracksGenre1 = 'Select genre';
   String tracksGenre2 = 'Select genre';
-  String tracksLabel = 'Select label';
   TextEditingController tracksInputCopyrightP = TextEditingController();
   TextEditingController tracksInputCopyrightC = TextEditingController();
   TextEditingController tracksInputInternalTracksId = TextEditingController();
@@ -334,8 +336,8 @@ class MainFormState extends ChangeNotifier {
         noInputPrevRelease = 0;
       }
 
-      if ((dataAlbumRes?.labelName ?? '').isNotEmpty) {
-        inputLabelName.text = dataAlbumRes?.labelName ?? '';
+      if (dataAlbumRes?.labelName!=null) {
+        // inputLabelName.text = dataAlbumRes?.labelName ?? '';
         inputReleaseId.text = dataAlbumRes?.releasedId.toString() ?? '';
         selectInputLabel = 1;
         yesInputLabel = 1;
@@ -462,8 +464,8 @@ class MainFormState extends ChangeNotifier {
         noInputPrevRelease = 0;
       }
 
-      if ((dataVideoRes?.labelName ?? '').isNotEmpty) {
-        inputLabelName.text = dataVideoRes?.labelName ?? '';
+      if (dataVideoRes?.labelName!=null) {
+        // inputLabelName.text = dataVideoRes?.labelName ?? '';
         inputReleaseId.text = dataVideoRes?.internalReleasedId.toString() ?? '';
         selectInputLabel = 1;
         yesInputLabel = 1;
@@ -590,8 +592,8 @@ class MainFormState extends ChangeNotifier {
         noInputPrevRelease = 0;
       }
 
-      if ((dataAudioRes?.labelName ?? '').isNotEmpty) {
-        inputLabelName.text = dataAudioRes?.labelName ?? '';
+      if (dataAudioRes?.labelName!=null) {
+        // inputLabelName.text = dataAudioRes?.labelName ?? '';
         inputReleaseId.text = dataAudioRes?.internalReleasedId.toString() ?? '';
         selectInputLabel = 1;
         yesInputLabel = 1;
@@ -681,7 +683,7 @@ class MainFormState extends ChangeNotifier {
   init() {
     getLanguage();
     getGenre();
-    getLabel();
+    getLabelMain();
     getRoles();
     getPublishing();
   }
@@ -777,7 +779,9 @@ class MainFormState extends ChangeNotifier {
       (cat) async {
         listLanguage = cat;
 
-        if (dataAlbumRes != null || dataVideoRes != null || dataAudioRes != null) {
+        if (dataAlbumRes != null ||
+            dataVideoRes != null ||
+            dataAudioRes != null) {
           // edit
           if (dataAlbumRes?.langId != null) {
             languageResMain = LanguageRes(
@@ -788,7 +792,7 @@ class MainFormState extends ChangeNotifier {
               id: dataAlbumRes?.langId?.id ?? 0,
               name: dataAlbumRes?.langId?.name ?? '',
             );
-          }else if (dataVideoRes?.langId != null) {
+          } else if (dataVideoRes?.langId != null) {
             languageResMain = LanguageRes(
               id: dataVideoRes?.langId?.id ?? 0,
               name: dataVideoRes?.langId?.name ?? '',
@@ -843,13 +847,15 @@ class MainFormState extends ChangeNotifier {
       (cat) async {
         listGenre = cat;
 
-        if (dataAlbumRes != null || dataVideoRes != null || dataAudioRes != null) {
+        if (dataAlbumRes != null ||
+            dataVideoRes != null ||
+            dataAudioRes != null) {
           if (dataAlbumRes?.genre1 != null) {
             genreRes1Main = genre.GenreRes(
               id: dataAlbumRes?.genre1?.id ?? 0,
               name: dataAlbumRes?.genre1?.name ?? '',
             );
-          }else if (dataVideoRes?.genre1 != null) {
+          } else if (dataVideoRes?.genre1 != null) {
             genreRes1Main = genre.GenreRes(
               id: dataVideoRes?.genre1?.id ?? 0,
               name: dataVideoRes?.genre1?.name ?? '',
@@ -868,12 +874,12 @@ class MainFormState extends ChangeNotifier {
               id: dataAlbumRes?.genre2?.id ?? 0,
               name: dataAlbumRes?.genre2?.name ?? '',
             );
-          }else if (dataVideoRes?.genre2 != null) {
+          } else if (dataVideoRes?.genre2 != null) {
             genreRes2Main = genre.GenreRes(
               id: dataVideoRes?.genre2?.id ?? 0,
               name: dataVideoRes?.genre2?.name ?? '',
             );
-          }else if (dataAudioRes?.genre2 != null) {
+          } else if (dataAudioRes?.genre2 != null) {
             genreRes2Main = genre.GenreRes(
               id: dataAudioRes?.genre2?.id ?? 0,
               name: dataAudioRes?.genre2?.name ?? '',
@@ -931,38 +937,61 @@ class MainFormState extends ChangeNotifier {
     );
   }
 
-  void getLabel() async {
-    isLoadingLabel = true;
+  void getLabelMain() async {
+    isLoadingLabelReq = true;
     notifyListeners();
 
-    final resStep1 = await HTTPGeneral().getLabel();
-    isLoadingLabel = false;
+    final resStep1 = await HTTPGeneral().getLabelReq();
+    isLoadingLabelReq = false;
 
     notifyListeners();
     resStep1.fold(
       (e) async {
-        isLoadingLabel = false;
+        isLoadingLabelReq = false;
         notifyListeners();
 
         await VUtils.showDefaultAlertDialog(
           context,
-          title: "Login Failed!",
+          title: "Failed!",
           message: e,
         );
       },
       (cat) async {
-        listLabel = cat;
-        // if ((dataAlbumRes?.trackId?.labelName ?? '').isNotEmpty) {
-        //   tracksLabel = dataAlbumRes?.trackId?.labelName ?? '';
-        // } else {
-        //   tracksLabel = cat[0].nama;
-        // }
+        listLabelReq = cat;
+        if (dataAlbumRes?.labelName != null) {
+          mainLabel = dataAlbumRes?.labelName ??
+              LabelRes(
+                id: 0,
+                nama: '',
+                labelCode: 0,
+              );
+          print('data album ada');
+          print(mainLabel.id);
+          print(mainLabel.nama);
+          print(mainLabel.labelCode);
+          notifyListeners();
+        } else if (dataVideoRes?.labelName != null) {
+          mainLabel = dataVideoRes?.labelName ??
+              LabelRes(
+                id: 0,
+                nama: '',
+                labelCode: 0,
+              );
+          notifyListeners();
+        } else if (dataAudioRes?.labelName != null) {
+          mainLabel = dataAudioRes?.labelName ??
+              LabelRes(
+                id: 0,
+                nama: '',
+                labelCode: 0,
+              );
+          notifyListeners();
+        } else {
+          mainLabel = cat[0];
+          notifyListeners();
+        }
 
-        tracksLabel = cat[0].nama;
-
-        log('label name : ${tracksLabel}');
-
-        isLoadingLabel = false;
+        isLoadingLabelReq = false;
         notifyListeners();
       },
     );
@@ -1079,7 +1108,7 @@ class MainFormState extends ChangeNotifier {
     albumSave.pCopy = mainInputCopyrightP.text;
     albumSave.cCopy = mainInputCopyrightC.text;
     albumSave.release = inputPrevReleased.text;
-    albumSave.label = inputLabelName.text;
+    albumSave.label = mainLabel.labelCode.toString();
     albumSave.releaseId = inputReleaseId.text;
     albumSave.upc = inputUpc.text;
     albumSave.audio = audio;
@@ -1096,7 +1125,7 @@ class MainFormState extends ChangeNotifier {
     albumSave.genre2Info = genreRes2Tracks?.id.toString() ?? '0';
     albumSave.pCopyInfo = tracksInputCopyrightP.text;
     albumSave.startTime = tracksInputCopyrightC.text;
-    albumSave.labelInfo = tracksLabel;
+    albumSave.labelInfo = mainLabel.labelCode.toString();
     albumSave.trackIdInfo = tracksInputInternalTracksId.text;
     albumSave.lirik = tracksInputLyrics.text;
     albumSave.conName = tracksInputContributorName.text;
@@ -1116,7 +1145,6 @@ class MainFormState extends ChangeNotifier {
       notifyListeners();
 
       if (formCode == 'album') {
-
         if (isEdit == false) {
           var formData = FormData.fromMap(
             {
@@ -1189,10 +1217,12 @@ class MainFormState extends ChangeNotifier {
               "label": albumSave.label,
               "release_id": albumSave.releaseId,
               "upc": albumSave.upc,
-              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
-                albumSave.audio?.path ?? '',
-                filename: albumSave.audio?.path,
-              ),
+              "file_track": (albumSave.audio == null)
+                  ? null
+                  : await MultipartFile.fromFile(
+                      albumSave.audio?.path ?? '',
+                      filename: albumSave.audio?.path,
+                    ),
               "lang_track": albumSave.languageTrackId,
               "track_title": albumSave.trackTitle,
               "title_version_track": albumSave.titleVersionTrack,
@@ -1219,15 +1249,12 @@ class MainFormState extends ChangeNotifier {
           editAlbum(formData);
         }
       } else if (formCode == 'ringtone') {
-
-        if(isEdit == false) {
+        if (isEdit == false) {
           var formData = FormData.fromMap(
             {
               "cover_albums": await MultipartFile.fromFile(
                 albumSave.coverImage?.path ?? '',
-                filename: albumSave.coverImage?.path
-                    .split('/')
-                    .last,
+                filename: albumSave.coverImage?.path.split('/').last,
               ),
               "lang": albumSave.languageId,
               "release_title": albumSave.releaseTitle,
@@ -1271,16 +1298,16 @@ class MainFormState extends ChangeNotifier {
           );
 
           saveRingtone(formData);
-        }else{
+        } else {
           var formData = FormData.fromMap(
             {
               "_method": 'PUT',
               "cover_albums": (albumSave.coverImage == null)
                   ? null
                   : await MultipartFile.fromFile(
-                albumSave.coverImage?.path ?? '',
-                filename: albumSave.coverImage?.path.split('/').last,
-              ),
+                      albumSave.coverImage?.path ?? '',
+                      filename: albumSave.coverImage?.path.split('/').last,
+                    ),
               "lang": albumSave.languageId,
               "release_title": albumSave.releaseTitle,
               "title_version": albumSave.titleVersion,
@@ -1295,10 +1322,12 @@ class MainFormState extends ChangeNotifier {
               "label": albumSave.label,
               "release_id": albumSave.releaseId,
               "upc": albumSave.upc,
-              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
-                albumSave.audio?.path ?? '',
-                filename: albumSave.audio?.path,
-              ),
+              "file_track": (albumSave.audio == null)
+                  ? null
+                  : await MultipartFile.fromFile(
+                      albumSave.audio?.path ?? '',
+                      filename: albumSave.audio?.path,
+                    ),
               "lang_track": albumSave.languageTrackId,
               "track_title": albumSave.trackTitle,
               "title_version_track": albumSave.titleVersionTrack,
@@ -1325,15 +1354,12 @@ class MainFormState extends ChangeNotifier {
           editRingtone(formData);
         }
       } else if (formCode == 'video') {
-
-        if(isEdit == false) {
+        if (isEdit == false) {
           var formData = FormData.fromMap(
             {
               "cover_albums": await MultipartFile.fromFile(
                 albumSave.coverImage?.path ?? '',
-                filename: albumSave.coverImage?.path
-                    .split('/')
-                    .last,
+                filename: albumSave.coverImage?.path.split('/').last,
               ),
               "lang": albumSave.languageId,
               "release_title": albumSave.releaseTitle,
@@ -1377,16 +1403,16 @@ class MainFormState extends ChangeNotifier {
           );
 
           saveVideo(formData);
-        }else{
+        } else {
           var formData = FormData.fromMap(
             {
               "_method": 'PUT',
               "cover_albums": (albumSave.coverImage == null)
                   ? null
                   : await MultipartFile.fromFile(
-                albumSave.coverImage?.path ?? '',
-                filename: albumSave.coverImage?.path.split('/').last,
-              ),
+                      albumSave.coverImage?.path ?? '',
+                      filename: albumSave.coverImage?.path.split('/').last,
+                    ),
               "lang": albumSave.languageId,
               "release_title": albumSave.releaseTitle,
               "title_version": albumSave.titleVersion,
@@ -1401,10 +1427,12 @@ class MainFormState extends ChangeNotifier {
               "label": albumSave.label,
               "release_id": albumSave.releaseId,
               "upc": albumSave.upc,
-              "file_track": (albumSave.audio == null ) ? null : await MultipartFile.fromFile(
-                albumSave.audio?.path ?? '',
-                filename: albumSave.audio?.path,
-              ),
+              "file_track": (albumSave.audio == null)
+                  ? null
+                  : await MultipartFile.fromFile(
+                      albumSave.audio?.path ?? '',
+                      filename: albumSave.audio?.path,
+                    ),
               "lang_track": albumSave.languageTrackId,
               "track_title": albumSave.trackTitle,
               "title_version_track": albumSave.titleVersionTrack,
@@ -1521,12 +1549,12 @@ class MainFormState extends ChangeNotifier {
     );
 
     resStep1.fold(
-          (e) async {
+      (e) async {
         isLoading = false;
         notifyListeners();
         showFlushBar([e]);
       },
-          (cat) async {
+      (cat) async {
         isLoading = false;
         isCompleted = true;
         notifyListeners();
@@ -1574,12 +1602,12 @@ class MainFormState extends ChangeNotifier {
     );
 
     resStep1.fold(
-          (e) async {
+      (e) async {
         isLoading = false;
         notifyListeners();
         showFlushBar([e]);
       },
-          (cat) async {
+      (cat) async {
         isLoading = false;
         isCompleted = true;
         notifyListeners();

@@ -70,7 +70,7 @@ class HomeFragmentState extends State<HomeFragment> {
                                 Expanded(
                                   child: buildTitleHome(
                                     total: state.jmlAudio.toString(),
-                                    nama: "Audio",
+                                    nama: "Ringtone",
                                     icon: Icons.audiotrack,
                                     isLoading: state.isLoadingJmlAudio,
                                   ),
@@ -92,7 +92,7 @@ class HomeFragmentState extends State<HomeFragment> {
                                 Expanded(
                                   child: buildTitleHome(
                                     total: state.getAmount.jmlAmount.toString(),
-                                    nama: "Kurs USD",
+                                    nama: "Amount balance",
                                     icon: Icons.money,
                                     isLoading: state.getAmount.isLoadingJmlAmount,
                                   ),

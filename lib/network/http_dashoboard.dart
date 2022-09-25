@@ -167,9 +167,38 @@ class HTTPDashboard {
     );
 
     print('response amount : ${response.data}');
+    print('url : ${ApiUrl.countAmount}${loginRes.id}');
 
     if (response.statusCode == 200) {
       String result = response.data['count'];
+      return Right(result);
+    } else {
+      return Left('Terjadi kesalahan');
+    }
+  }
+
+  Future<Either<String, int>> cekReq() async {
+    print('HTTPCekReq start');
+    final getUser = Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+
+    Map<String, dynamic> data = {
+      'id': loginRes.id.toString(),
+    };
+
+    final response = await WebService().client().get(
+      ApiUrl.cekReq,
+      queryParameters: data,
+      options: Options(headers: {
+        'Authorization': 'Bearer ' + loginRes.access_token,
+      }),
+    );
+
+    print('response cek req : ${response.data}');
+    print('url : ${ApiUrl.cekReq}${loginRes.id}');
+
+    if (response.statusCode == 200) {
+      int result = response.data['count'];
       return Right(result);
     } else {
       return Left('Terjadi kesalahan');

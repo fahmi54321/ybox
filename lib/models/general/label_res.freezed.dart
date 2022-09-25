@@ -25,7 +25,7 @@ class _$LabelResTearOff {
   _LabelRes call(
       {@JsonKey(name: 'id', defaultValue: 0) required int id,
       @JsonKey(name: 'nama', defaultValue: '') required String nama,
-      @JsonKey(name: 'label_code', defaultValue: 0) required int labelCode}) {
+      @JsonKey(name: 'label', defaultValue: 0) required int labelCode}) {
     return _LabelRes(
       id: id,
       nama: nama,
@@ -47,7 +47,7 @@ mixin _$LabelRes {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'nama', defaultValue: '')
   String get nama => throw _privateConstructorUsedError;
-  @JsonKey(name: 'label_code', defaultValue: 0)
+  @JsonKey(name: 'label', defaultValue: 0)
   int get labelCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -63,7 +63,7 @@ abstract class $LabelResCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id', defaultValue: 0) int id,
       @JsonKey(name: 'nama', defaultValue: '') String nama,
-      @JsonKey(name: 'label_code', defaultValue: 0) int labelCode});
+      @JsonKey(name: 'label', defaultValue: 0) int labelCode});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ abstract class _$LabelResCopyWith<$Res> implements $LabelResCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id', defaultValue: 0) int id,
       @JsonKey(name: 'nama', defaultValue: '') String nama,
-      @JsonKey(name: 'label_code', defaultValue: 0) int labelCode});
+      @JsonKey(name: 'label', defaultValue: 0) int labelCode});
 }
 
 /// @nodoc
@@ -148,7 +148,7 @@ class _$_LabelRes extends _LabelRes {
   const _$_LabelRes(
       {@JsonKey(name: 'id', defaultValue: 0) required this.id,
       @JsonKey(name: 'nama', defaultValue: '') required this.nama,
-      @JsonKey(name: 'label_code', defaultValue: 0) required this.labelCode})
+      @JsonKey(name: 'label', defaultValue: 0) required this.labelCode})
       : super._();
 
   factory _$_LabelRes.fromJson(Map<String, dynamic> json) =>
@@ -161,7 +161,7 @@ class _$_LabelRes extends _LabelRes {
   @JsonKey(name: 'nama', defaultValue: '')
   final String nama;
   @override
-  @JsonKey(name: 'label_code', defaultValue: 0)
+  @JsonKey(name: 'label', defaultValue: 0)
   final int labelCode;
 
   @override
@@ -199,12 +199,10 @@ class _$_LabelRes extends _LabelRes {
 
 abstract class _LabelRes extends LabelRes {
   const factory _LabelRes(
-      {@JsonKey(name: 'id', defaultValue: 0)
-          required int id,
-      @JsonKey(name: 'nama', defaultValue: '')
-          required String nama,
-      @JsonKey(name: 'label_code', defaultValue: 0)
-          required int labelCode}) = _$_LabelRes;
+          {@JsonKey(name: 'id', defaultValue: 0) required int id,
+          @JsonKey(name: 'nama', defaultValue: '') required String nama,
+          @JsonKey(name: 'label', defaultValue: 0) required int labelCode}) =
+      _$_LabelRes;
   const _LabelRes._() : super._();
 
   factory _LabelRes.fromJson(Map<String, dynamic> json) = _$_LabelRes.fromJson;
@@ -216,7 +214,7 @@ abstract class _LabelRes extends LabelRes {
   @JsonKey(name: 'nama', defaultValue: '')
   String get nama;
   @override
-  @JsonKey(name: 'label_code', defaultValue: 0)
+  @JsonKey(name: 'label', defaultValue: 0)
   int get labelCode;
   @override
   @JsonKey(ignore: true)

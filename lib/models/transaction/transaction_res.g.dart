@@ -47,6 +47,7 @@ _$_DataTransactionRes _$$_DataTransactionResFromJson(Map json) =>
           requestDate:
               $checkedConvert('request_date', (v) => v as String? ?? ''),
           status: $checkedConvert('status', (v) => v as int? ?? 0),
+          amount: $checkedConvert('amount', (v) => v as String? ?? ''),
         );
         return val;
       },
@@ -64,4 +65,5 @@ Map<String, dynamic> _$$_DataTransactionResToJson(
       'name_on_bank': instance.nameOnBank,
       'request_date': instance.requestDate,
       'status': instance.status,
+      'amount': instance.amount,
     };

@@ -246,18 +246,23 @@ class _TrackPageState extends State<TrackPage> {
                             ? CircularProgressIndicator(
                                 color: CPPrimaryColor,
                               )
-                            : VDropDown(
-                                value: widget.state.tracksLabel,
-                                onChanged: (String? data) {
+                            : VDropDownLabel(
+                                value: widget.state.mainLabel,
+                                onChanged: (LabelRes? data) {
                                   setState(() {
-                                    widget.state.tracksLabel = data ?? '';
+                                    widget.state.mainLabel = data ??
+                                        LabelRes(
+                                          id: 0,
+                                          nama: '',
+                                          labelCode: 0,
+                                        );
                                   });
                                 },
-                                items: widget.state.listLabel
-                                    .map<DropdownMenuItem<String>>(
+                                items: widget.state.listLabelReq
+                                    .map<DropdownMenuItem<LabelRes>>(
                                         (LabelRes value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value.nama,
+                                  return DropdownMenuItem<LabelRes>(
+                                    value: value,
                                     child: Text(value.nama),
                                   );
                                 }).toList(),

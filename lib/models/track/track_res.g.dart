@@ -63,7 +63,11 @@ _$_DataTrackRes _$$_DataTrackResFromJson(Map json) => $checkedCreate(
           pCopyright: $checkedConvert('p_copyright', (v) => v as String? ?? ''),
           previewsStartTime:
               $checkedConvert('previews_start_time', (v) => v as int? ?? 0),
-          labelName: $checkedConvert('label_name', (v) => v as String? ?? ''),
+          labelName: $checkedConvert(
+              'label_name',
+              (v) => v == null
+                  ? null
+                  : LabelRes.fromJson(Map<String, dynamic>.from(v as Map))),
           internalTrackId:
               $checkedConvert('internal_track_id', (v) => v as int? ?? 0),
           lyric: $checkedConvert('lyric', (v) => v as String? ?? ''),
@@ -140,10 +144,6 @@ Map<String, dynamic> _$$_DataTrackResToJson(_$_DataTrackRes instance) {
     'this_track_is': instance.thisTrackIs,
     'p_copyright': instance.pCopyright,
     'previews_start_time': instance.previewsStartTime,
-    'label_name': instance.labelName,
-    'internal_track_id': instance.internalTrackId,
-    'lyric': instance.lyric,
-    'contributor_id': instance.contributorId,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -152,6 +152,10 @@ Map<String, dynamic> _$$_DataTrackResToJson(_$_DataTrackRes instance) {
     }
   }
 
+  writeNotNull('label_name', instance.labelName?.toJson());
+  val['internal_track_id'] = instance.internalTrackId;
+  val['lyric'] = instance.lyric;
+  val['contributor_id'] = instance.contributorId;
   writeNotNull('contributor', instance.contributor?.toJson());
   writeNotNull('lang_lyric', instance.lang?.toJson());
   writeNotNull('genre_1', instance.genre1?.toJson());

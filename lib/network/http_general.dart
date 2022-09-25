@@ -62,30 +62,6 @@ class HTTPGeneral {
     }
   }
 
-  Future<Either<String, List<LabelRes>>> getLabel() async {
-    print('HTTPLabel start');
-
-    final getUser = Get.find<UserController>();
-    LoginRes loginRes = await getUser.getUserLogin();
-
-    final response = await WebService().client().get(
-          ApiUrl.label,
-          options: Options(headers: {
-            'Authorization': 'Bearer ' + loginRes.access_token,
-          }),
-        );
-
-    if (response.statusCode == 200) {
-      final result = (response.data as List<dynamic>)
-          .map((e) => LabelRes.fromJson(e as Map<String, dynamic>))
-          .toList();
-      print('response label : ${response.data}');
-      return Right(result);
-    } else {
-      return Left('Terjadi kesalahan');
-    }
-  }
-
   Future<Either<String, List<RolesRes>>> getRoles() async {
     print('HTTPRoles start');
 
@@ -176,6 +152,67 @@ class HTTPGeneral {
       return Right(result);
     } else {
       return Left('Terjadi kesalahan' as String);
+    }
+  }
+
+  Future<Either<String, List<LabelRes>>> getLabelReq() async {
+    print('HTTPLabelReq start');
+
+    final getUser = Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+
+    Map<String, dynamic> data = {
+      'id': loginRes.id.toString(),
+    };
+
+    final response = await WebService().client().get(
+      ApiUrl.labelReq,
+      queryParameters: data,
+      options: Options(headers: {
+        'Authorization': 'Bearer ' + loginRes.access_token,
+      }),
+    );
+
+    print('url : ${ApiUrl.labelReq}');
+    print(response);
+
+    if (response.statusCode == 200) {
+      final result = (response.data as List<dynamic>)
+          .map((e) => LabelRes.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print('response label req : ${response.data}');
+      return Right(result);
+    } else {
+      return Left('Terjadi kesalahan');
+    }
+  }
+
+  Future<Either<String, List<LabelRes>>> getLabelTransaksi() async {
+    print('HTTPLabelReq start');
+
+    final getUser = Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+
+    Map<String, dynamic> data = {
+      'id': loginRes.id.toString(),
+    };
+
+    final response = await WebService().client().get(
+      ApiUrl.labelTransaksi,
+      queryParameters: data,
+      options: Options(headers: {
+        'Authorization': 'Bearer ' + loginRes.access_token,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final result = (response.data as List<dynamic>)
+          .map((e) => LabelRes.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print('response label req : ${response.data}');
+      return Right(result);
+    } else {
+      return Left('Terjadi kesalahan');
     }
   }
 }

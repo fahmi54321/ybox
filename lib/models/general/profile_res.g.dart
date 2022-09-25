@@ -16,6 +16,7 @@ _$_ProfileRes _$$_ProfileResFromJson(Map json) => $checkedCreate(
           firstName: $checkedConvert('first_name', (v) => v as String? ?? ''),
           lastName: $checkedConvert('last_name', (v) => v as String? ?? ''),
           levelId: $checkedConvert('level_id', (v) => v as int? ?? 0),
+          username: $checkedConvert('username', (v) => v as String? ?? ''),
         );
         return val;
       },
@@ -33,4 +34,5 @@ Map<String, dynamic> _$$_ProfileResToJson(_$_ProfileRes instance) =>
       'first_name': instance.firstName,
       'last_name': instance.lastName,
       'level_id': instance.levelId,
+      'username': instance.username,
     };

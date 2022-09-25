@@ -237,13 +237,16 @@ class _$DataTransactionResTearOff {
       @JsonKey(name: 'request_date', defaultValue: '')
           required String requestDate,
       @JsonKey(name: 'status', defaultValue: 0)
-          required int status}) {
+          required int status,
+      @JsonKey(name: 'amount', defaultValue: '')
+          required String amount}) {
     return _DataTransactionRes(
       id: id,
       member: member,
       nameOnBank: nameOnBank,
       requestDate: requestDate,
       status: status,
+      amount: amount,
     );
   }
 
@@ -267,6 +270,8 @@ mixin _$DataTransactionRes {
   String get requestDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'status', defaultValue: 0)
   int get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'amount', defaultValue: '')
+  String get amount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -284,7 +289,8 @@ abstract class $DataTransactionResCopyWith<$Res> {
       @JsonKey(name: 'member', defaultValue: '') String member,
       @JsonKey(name: 'name_on_bank', defaultValue: '') String nameOnBank,
       @JsonKey(name: 'request_date', defaultValue: '') String requestDate,
-      @JsonKey(name: 'status', defaultValue: 0) int status});
+      @JsonKey(name: 'status', defaultValue: 0) int status,
+      @JsonKey(name: 'amount', defaultValue: '') String amount});
 }
 
 /// @nodoc
@@ -303,6 +309,7 @@ class _$DataTransactionResCopyWithImpl<$Res>
     Object? nameOnBank = freezed,
     Object? requestDate = freezed,
     Object? status = freezed,
+    Object? amount = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -325,6 +332,10 @@ class _$DataTransactionResCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
+      amount: amount == freezed
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -341,7 +352,8 @@ abstract class _$DataTransactionResCopyWith<$Res>
       @JsonKey(name: 'member', defaultValue: '') String member,
       @JsonKey(name: 'name_on_bank', defaultValue: '') String nameOnBank,
       @JsonKey(name: 'request_date', defaultValue: '') String requestDate,
-      @JsonKey(name: 'status', defaultValue: 0) int status});
+      @JsonKey(name: 'status', defaultValue: 0) int status,
+      @JsonKey(name: 'amount', defaultValue: '') String amount});
 }
 
 /// @nodoc
@@ -362,6 +374,7 @@ class __$DataTransactionResCopyWithImpl<$Res>
     Object? nameOnBank = freezed,
     Object? requestDate = freezed,
     Object? status = freezed,
+    Object? amount = freezed,
   }) {
     return _then(_DataTransactionRes(
       id: id == freezed
@@ -384,6 +397,10 @@ class __$DataTransactionResCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as int,
+      amount: amount == freezed
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -403,7 +420,9 @@ class _$_DataTransactionRes extends _DataTransactionRes {
       @JsonKey(name: 'request_date', defaultValue: '')
           required this.requestDate,
       @JsonKey(name: 'status', defaultValue: 0)
-          required this.status})
+          required this.status,
+      @JsonKey(name: 'amount', defaultValue: '')
+          required this.amount})
       : super._();
 
   factory _$_DataTransactionRes.fromJson(Map<String, dynamic> json) =>
@@ -424,10 +443,13 @@ class _$_DataTransactionRes extends _DataTransactionRes {
   @override
   @JsonKey(name: 'status', defaultValue: 0)
   final int status;
+  @override
+  @JsonKey(name: 'amount', defaultValue: '')
+  final String amount;
 
   @override
   String toString() {
-    return 'DataTransactionRes(id: $id, member: $member, nameOnBank: $nameOnBank, requestDate: $requestDate, status: $status)';
+    return 'DataTransactionRes(id: $id, member: $member, nameOnBank: $nameOnBank, requestDate: $requestDate, status: $status, amount: $amount)';
   }
 
   @override
@@ -441,7 +463,8 @@ class _$_DataTransactionRes extends _DataTransactionRes {
                 .equals(other.nameOnBank, nameOnBank) &&
             const DeepCollectionEquality()
                 .equals(other.requestDate, requestDate) &&
-            const DeepCollectionEquality().equals(other.status, status));
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.amount, amount));
   }
 
   @override
@@ -451,7 +474,8 @@ class _$_DataTransactionRes extends _DataTransactionRes {
       const DeepCollectionEquality().hash(member),
       const DeepCollectionEquality().hash(nameOnBank),
       const DeepCollectionEquality().hash(requestDate),
-      const DeepCollectionEquality().hash(status));
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(amount));
 
   @JsonKey(ignore: true)
   @override
@@ -475,7 +499,9 @@ abstract class _DataTransactionRes extends DataTransactionRes {
       @JsonKey(name: 'request_date', defaultValue: '')
           required String requestDate,
       @JsonKey(name: 'status', defaultValue: 0)
-          required int status}) = _$_DataTransactionRes;
+          required int status,
+      @JsonKey(name: 'amount', defaultValue: '')
+          required String amount}) = _$_DataTransactionRes;
   const _DataTransactionRes._() : super._();
 
   factory _DataTransactionRes.fromJson(Map<String, dynamic> json) =
@@ -496,6 +522,9 @@ abstract class _DataTransactionRes extends DataTransactionRes {
   @override
   @JsonKey(name: 'status', defaultValue: 0)
   int get status;
+  @override
+  @JsonKey(name: 'amount', defaultValue: '')
+  String get amount;
   @override
   @JsonKey(ignore: true)
   _$DataTransactionResCopyWith<_DataTransactionRes> get copyWith =>

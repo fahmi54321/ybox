@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_storage/controllers/amount_controller.dart';
+import 'package:cloud_storage/controllers/cek_req_controller.dart';
+import 'package:cloud_storage/controllers/user_controller.dart';
 import 'package:cloud_storage/models/login_res.dart';
 import 'package:cloud_storage/models/transaction/transaction_res.dart';
+import 'package:cloud_storage/network/http_dashoboard.dart';
 import 'package:cloud_storage/network/http_transaction.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
 import 'package:cloud_storage/utils/utils.dart';
@@ -16,6 +19,11 @@ class TransactionState extends ChangeNotifier {
 
   TransactionRes? transactionRes;
   final getAmount = gets.Get.find<AmountController>();
+  final cekReq = gets.Get.find<CekReqController>();
+
+  bool isLoadingCekReq = false;
+
+  int jmlCekReq = 0;
 
   TransactionState({required this.context}) {
     init();
@@ -27,10 +35,18 @@ class TransactionState extends ChangeNotifier {
   LoginRes? loginRes;
 
   init() async {
+    print('cek req : ${jmlCekReq}');
+
+    getCekReq();
+
     pagingController.addPageRequestListener((pageKey) {
       getTransaction(pageKey);
     });
   }
+
+  // void getCekReq() async {
+  //   cekReq.cekReq(context);
+  // }
 
   Future<void> pullRefresh() async {
     pagingController.refresh();
@@ -39,8 +55,13 @@ class TransactionState extends ChangeNotifier {
   Future<void> getTransaction(int page) async {
     log("getTransaction $page");
 
+    final getUser = gets.Get.find<UserController>();
+    loginRes = await getUser.getUserLogin();
+    notifyListeners();
+
     Map<String, dynamic> data = {
       'page': page,
+      'id': loginRes?.id.toString(),
     };
     try {
       final resStep1 = await HTTPTransaction().getTransaction(data: data);
@@ -68,6 +89,31 @@ class TransactionState extends ChangeNotifier {
       print(error);
       pagingController.error = error;
     }
+  }
+
+  void getCekReq() async {
+    isLoadingCekReq = true;
+    notifyListeners();
+
+    final resStep1 = await HTTPDashboard().cekReq();
+
+    resStep1.fold(
+      (e) async {
+        isLoadingCekReq = false;
+        notifyListeners();
+
+        await VUtils.showDefaultAlertDialog(
+          context,
+          title: "Login Failed!",
+          message: e,
+        );
+      },
+      (cat) async {
+        jmlCekReq = cat;
+        isLoadingCekReq = false;
+        notifyListeners();
+      },
+    );
   }
 
   Widget statusIconItemTrans(int status) {

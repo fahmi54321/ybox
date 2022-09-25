@@ -33,7 +33,7 @@ Future<int> showPilihKategoriForm(BuildContext context) async {
                         Expanded(
                           child: Center(
                             child: vText(
-                              'Pilihan lain',
+                              'Menu lain',
                               fontWeight: FontWeight.w700,
                             ),
                           ),

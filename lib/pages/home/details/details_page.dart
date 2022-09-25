@@ -110,7 +110,7 @@ class DetailsPageState extends State<DetailsPage> {
           buildItemOverview(
             context: context,
             title: 'Label name',
-            nama: state.albumRes?.labelName ?? '-',
+            nama: state.albumRes?.labelName?.nama ?? '-',
           ),
           8.height,
           buildItemOverview(

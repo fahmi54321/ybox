@@ -200,7 +200,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
       children: [
         SizedBox(height: 8),
         vText(
-          "Account Name",
+          "Account Number",
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),

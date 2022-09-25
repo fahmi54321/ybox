@@ -257,8 +257,8 @@ class _$DataTrackResTearOff {
           required String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -352,8 +352,8 @@ mixin _$DataTrackRes {
   String get pCopyright => throw _privateConstructorUsedError;
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   int get previewsStartTime => throw _privateConstructorUsedError;
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'label_name')
+  LabelRes? get labelName => throw _privateConstructorUsedError;
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   int get internalTrackId => throw _privateConstructorUsedError;
   @JsonKey(name: 'lyric', defaultValue: '')
@@ -419,8 +419,8 @@ abstract class $DataTrackResCopyWith<$Res> {
           String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -438,6 +438,7 @@ abstract class $DataTrackResCopyWith<$Res> {
       @JsonKey(name: 'user')
           UserRes? user});
 
+  $LabelResCopyWith<$Res>? get labelName;
   $ConstributorResCopyWith<$Res>? get contributor;
   $LanguageResCopyWith<$Res>? get lang;
   $GenreResCopyWith<$Res>? get genre1;
@@ -559,7 +560,7 @@ class _$DataTrackResCopyWithImpl<$Res> implements $DataTrackResCopyWith<$Res> {
       labelName: labelName == freezed
           ? _value.labelName
           : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LabelRes?,
       internalTrackId: internalTrackId == freezed
           ? _value.internalTrackId
           : internalTrackId // ignore: cast_nullable_to_non_nullable
@@ -593,6 +594,17 @@ class _$DataTrackResCopyWithImpl<$Res> implements $DataTrackResCopyWith<$Res> {
           : user // ignore: cast_nullable_to_non_nullable
               as UserRes?,
     ));
+  }
+
+  @override
+  $LabelResCopyWith<$Res>? get labelName {
+    if (_value.labelName == null) {
+      return null;
+    }
+
+    return $LabelResCopyWith<$Res>(_value.labelName!, (value) {
+      return _then(_value.copyWith(labelName: value));
+    });
   }
 
   @override
@@ -695,8 +707,8 @@ abstract class _$DataTrackResCopyWith<$Res>
           String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -714,6 +726,8 @@ abstract class _$DataTrackResCopyWith<$Res>
       @JsonKey(name: 'user')
           UserRes? user});
 
+  @override
+  $LabelResCopyWith<$Res>? get labelName;
   @override
   $ConstributorResCopyWith<$Res>? get contributor;
   @override
@@ -842,7 +856,7 @@ class __$DataTrackResCopyWithImpl<$Res> extends _$DataTrackResCopyWithImpl<$Res>
       labelName: labelName == freezed
           ? _value.labelName
           : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LabelRes?,
       internalTrackId: internalTrackId == freezed
           ? _value.internalTrackId
           : internalTrackId // ignore: cast_nullable_to_non_nullable
@@ -921,8 +935,8 @@ class _$_DataTrackRes extends _DataTrackRes {
           required this.pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required this.previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required this.labelName,
+      @JsonKey(name: 'label_name')
+          this.labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required this.internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -999,8 +1013,8 @@ class _$_DataTrackRes extends _DataTrackRes {
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   final int previewsStartTime;
   @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  final String labelName;
+  @JsonKey(name: 'label_name')
+  final LabelRes? labelName;
   @override
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   final int internalTrackId;
@@ -1158,8 +1172,8 @@ abstract class _DataTrackRes extends DataTrackRes {
           required String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1236,8 +1250,8 @@ abstract class _DataTrackRes extends DataTrackRes {
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   int get previewsStartTime;
   @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName;
+  @JsonKey(name: 'label_name')
+  LabelRes? get labelName;
   @override
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   int get internalTrackId;

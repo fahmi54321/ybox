@@ -2,9 +2,14 @@ import 'package:cloud_storage/resource/strings.dart';
 
 class ApiUrl {
   static String login = APP_URL + 'api/login';
+  static String ubahPass = APP_URL + 'api/change_password';
+  static String register = APP_URL + 'api/register';
+  static String logout = APP_URL + 'api/logout';
   static String language = APP_URL + 'api/language';
   static String genre = APP_URL + 'api/genre';
   static String label = APP_URL + 'api/label';
+  static String labelReq = APP_URL + 'api/label_additem';
+  static String labelTransaksi = APP_URL + 'api/label_request';
   static String roles = APP_URL + 'api/roletrack';
   static String publishing = APP_URL + 'api/publishing';
   static String saveAlbum = APP_URL + 'api/album_api';
@@ -31,6 +36,7 @@ class ApiUrl {
   static String countVideo = APP_URL + 'api/dashboard/count-video';
   static String countSetup = APP_URL + 'api/dashboard/count-setup';
   static String countAmount = APP_URL + 'api/amount_balance/';
+  static String cekReq = APP_URL + 'api/cek_request';
   static String saveTransaction = APP_URL + 'api/transaction_api';
   static String getTransaction = APP_URL + 'api/transaction_api';
   static String detailsTransaction = APP_URL + 'api/transaction/';

@@ -239,12 +239,14 @@ class _$DataVideoResTearOff {
           required String cCopyright,
       @JsonKey(name: 'released', defaultValue: '')
           required String released,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_released_id', defaultValue: 0)
           required int internalReleasedId,
       @JsonKey(name: 'upc', defaultValue: 0)
           required int upc,
+      @JsonKey(name: 'label')
+          LabelRes? labelMain,
       @JsonKey(name: 'is_check', defaultValue: 0)
           required int isCheck,
       @JsonKey(name: 'lang_id')
@@ -270,6 +272,7 @@ class _$DataVideoResTearOff {
       labelName: labelName,
       internalReleasedId: internalReleasedId,
       upc: upc,
+      labelMain: labelMain,
       isCheck: isCheck,
       langId: langId,
       trackId: trackId,
@@ -307,12 +310,14 @@ mixin _$DataVideoRes {
   String get cCopyright => throw _privateConstructorUsedError;
   @JsonKey(name: 'released', defaultValue: '')
   String get released => throw _privateConstructorUsedError;
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'label_name')
+  LabelRes? get labelName => throw _privateConstructorUsedError;
   @JsonKey(name: 'internal_released_id', defaultValue: 0)
   int get internalReleasedId => throw _privateConstructorUsedError;
   @JsonKey(name: 'upc', defaultValue: 0)
   int get upc => throw _privateConstructorUsedError;
+  @JsonKey(name: 'label')
+  LabelRes? get labelMain => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_check', defaultValue: 0)
   int get isCheck => throw _privateConstructorUsedError;
   @JsonKey(name: 'lang_id')
@@ -356,12 +361,14 @@ abstract class $DataVideoResCopyWith<$Res> {
           String cCopyright,
       @JsonKey(name: 'released', defaultValue: '')
           String released,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_released_id', defaultValue: 0)
           int internalReleasedId,
       @JsonKey(name: 'upc', defaultValue: 0)
           int upc,
+      @JsonKey(name: 'label')
+          LabelRes? labelMain,
       @JsonKey(name: 'is_check', defaultValue: 0)
           int isCheck,
       @JsonKey(name: 'lang_id')
@@ -375,6 +382,8 @@ abstract class $DataVideoResCopyWith<$Res> {
       @JsonKey(name: 'user_id')
           UserRes? user});
 
+  $LabelResCopyWith<$Res>? get labelName;
+  $LabelResCopyWith<$Res>? get labelMain;
   $LanguageResCopyWith<$Res>? get langId;
   $TrackIdResCopyWith<$Res>? get trackId;
   $GenreResCopyWith<$Res>? get genre1;
@@ -404,6 +413,7 @@ class _$DataVideoResCopyWithImpl<$Res> implements $DataVideoResCopyWith<$Res> {
     Object? labelName = freezed,
     Object? internalReleasedId = freezed,
     Object? upc = freezed,
+    Object? labelMain = freezed,
     Object? isCheck = freezed,
     Object? langId = freezed,
     Object? trackId = freezed,
@@ -451,7 +461,7 @@ class _$DataVideoResCopyWithImpl<$Res> implements $DataVideoResCopyWith<$Res> {
       labelName: labelName == freezed
           ? _value.labelName
           : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LabelRes?,
       internalReleasedId: internalReleasedId == freezed
           ? _value.internalReleasedId
           : internalReleasedId // ignore: cast_nullable_to_non_nullable
@@ -460,6 +470,10 @@ class _$DataVideoResCopyWithImpl<$Res> implements $DataVideoResCopyWith<$Res> {
           ? _value.upc
           : upc // ignore: cast_nullable_to_non_nullable
               as int,
+      labelMain: labelMain == freezed
+          ? _value.labelMain
+          : labelMain // ignore: cast_nullable_to_non_nullable
+              as LabelRes?,
       isCheck: isCheck == freezed
           ? _value.isCheck
           : isCheck // ignore: cast_nullable_to_non_nullable
@@ -485,6 +499,28 @@ class _$DataVideoResCopyWithImpl<$Res> implements $DataVideoResCopyWith<$Res> {
           : user // ignore: cast_nullable_to_non_nullable
               as UserRes?,
     ));
+  }
+
+  @override
+  $LabelResCopyWith<$Res>? get labelName {
+    if (_value.labelName == null) {
+      return null;
+    }
+
+    return $LabelResCopyWith<$Res>(_value.labelName!, (value) {
+      return _then(_value.copyWith(labelName: value));
+    });
+  }
+
+  @override
+  $LabelResCopyWith<$Res>? get labelMain {
+    if (_value.labelMain == null) {
+      return null;
+    }
+
+    return $LabelResCopyWith<$Res>(_value.labelMain!, (value) {
+      return _then(_value.copyWith(labelMain: value));
+    });
   }
 
   @override
@@ -569,12 +605,14 @@ abstract class _$DataVideoResCopyWith<$Res>
           String cCopyright,
       @JsonKey(name: 'released', defaultValue: '')
           String released,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_released_id', defaultValue: 0)
           int internalReleasedId,
       @JsonKey(name: 'upc', defaultValue: 0)
           int upc,
+      @JsonKey(name: 'label')
+          LabelRes? labelMain,
       @JsonKey(name: 'is_check', defaultValue: 0)
           int isCheck,
       @JsonKey(name: 'lang_id')
@@ -588,6 +626,10 @@ abstract class _$DataVideoResCopyWith<$Res>
       @JsonKey(name: 'user_id')
           UserRes? user});
 
+  @override
+  $LabelResCopyWith<$Res>? get labelName;
+  @override
+  $LabelResCopyWith<$Res>? get labelMain;
   @override
   $LanguageResCopyWith<$Res>? get langId;
   @override
@@ -624,6 +666,7 @@ class __$DataVideoResCopyWithImpl<$Res> extends _$DataVideoResCopyWithImpl<$Res>
     Object? labelName = freezed,
     Object? internalReleasedId = freezed,
     Object? upc = freezed,
+    Object? labelMain = freezed,
     Object? isCheck = freezed,
     Object? langId = freezed,
     Object? trackId = freezed,
@@ -671,7 +714,7 @@ class __$DataVideoResCopyWithImpl<$Res> extends _$DataVideoResCopyWithImpl<$Res>
       labelName: labelName == freezed
           ? _value.labelName
           : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as LabelRes?,
       internalReleasedId: internalReleasedId == freezed
           ? _value.internalReleasedId
           : internalReleasedId // ignore: cast_nullable_to_non_nullable
@@ -680,6 +723,10 @@ class __$DataVideoResCopyWithImpl<$Res> extends _$DataVideoResCopyWithImpl<$Res>
           ? _value.upc
           : upc // ignore: cast_nullable_to_non_nullable
               as int,
+      labelMain: labelMain == freezed
+          ? _value.labelMain
+          : labelMain // ignore: cast_nullable_to_non_nullable
+              as LabelRes?,
       isCheck: isCheck == freezed
           ? _value.isCheck
           : isCheck // ignore: cast_nullable_to_non_nullable
@@ -732,12 +779,14 @@ class _$_DataVideoRes extends _DataVideoRes {
           required this.cCopyright,
       @JsonKey(name: 'released', defaultValue: '')
           required this.released,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required this.labelName,
+      @JsonKey(name: 'label_name')
+          this.labelName,
       @JsonKey(name: 'internal_released_id', defaultValue: 0)
           required this.internalReleasedId,
       @JsonKey(name: 'upc', defaultValue: 0)
           required this.upc,
+      @JsonKey(name: 'label')
+          this.labelMain,
       @JsonKey(name: 'is_check', defaultValue: 0)
           required this.isCheck,
       @JsonKey(name: 'lang_id')
@@ -783,14 +832,17 @@ class _$_DataVideoRes extends _DataVideoRes {
   @JsonKey(name: 'released', defaultValue: '')
   final String released;
   @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  final String labelName;
+  @JsonKey(name: 'label_name')
+  final LabelRes? labelName;
   @override
   @JsonKey(name: 'internal_released_id', defaultValue: 0)
   final int internalReleasedId;
   @override
   @JsonKey(name: 'upc', defaultValue: 0)
   final int upc;
+  @override
+  @JsonKey(name: 'label')
+  final LabelRes? labelMain;
   @override
   @JsonKey(name: 'is_check', defaultValue: 0)
   final int isCheck;
@@ -812,7 +864,7 @@ class _$_DataVideoRes extends _DataVideoRes {
 
   @override
   String toString() {
-    return 'DataVideoRes(id: $id, cover: $cover, title: $title, titleVersion: $titleVersion, spotify: $spotify, itunes: $itunes, pCopyright: $pCopyright, cCopyright: $cCopyright, released: $released, labelName: $labelName, internalReleasedId: $internalReleasedId, upc: $upc, isCheck: $isCheck, langId: $langId, trackId: $trackId, genre1: $genre1, genre2: $genre2, user: $user)';
+    return 'DataVideoRes(id: $id, cover: $cover, title: $title, titleVersion: $titleVersion, spotify: $spotify, itunes: $itunes, pCopyright: $pCopyright, cCopyright: $cCopyright, released: $released, labelName: $labelName, internalReleasedId: $internalReleasedId, upc: $upc, labelMain: $labelMain, isCheck: $isCheck, langId: $langId, trackId: $trackId, genre1: $genre1, genre2: $genre2, user: $user)';
   }
 
   @override
@@ -836,6 +888,7 @@ class _$_DataVideoRes extends _DataVideoRes {
             const DeepCollectionEquality()
                 .equals(other.internalReleasedId, internalReleasedId) &&
             const DeepCollectionEquality().equals(other.upc, upc) &&
+            const DeepCollectionEquality().equals(other.labelMain, labelMain) &&
             const DeepCollectionEquality().equals(other.isCheck, isCheck) &&
             const DeepCollectionEquality().equals(other.langId, langId) &&
             const DeepCollectionEquality().equals(other.trackId, trackId) &&
@@ -845,26 +898,28 @@ class _$_DataVideoRes extends _DataVideoRes {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(cover),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(titleVersion),
-      const DeepCollectionEquality().hash(spotify),
-      const DeepCollectionEquality().hash(itunes),
-      const DeepCollectionEquality().hash(pCopyright),
-      const DeepCollectionEquality().hash(cCopyright),
-      const DeepCollectionEquality().hash(released),
-      const DeepCollectionEquality().hash(labelName),
-      const DeepCollectionEquality().hash(internalReleasedId),
-      const DeepCollectionEquality().hash(upc),
-      const DeepCollectionEquality().hash(isCheck),
-      const DeepCollectionEquality().hash(langId),
-      const DeepCollectionEquality().hash(trackId),
-      const DeepCollectionEquality().hash(genre1),
-      const DeepCollectionEquality().hash(genre2),
-      const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(id),
+        const DeepCollectionEquality().hash(cover),
+        const DeepCollectionEquality().hash(title),
+        const DeepCollectionEquality().hash(titleVersion),
+        const DeepCollectionEquality().hash(spotify),
+        const DeepCollectionEquality().hash(itunes),
+        const DeepCollectionEquality().hash(pCopyright),
+        const DeepCollectionEquality().hash(cCopyright),
+        const DeepCollectionEquality().hash(released),
+        const DeepCollectionEquality().hash(labelName),
+        const DeepCollectionEquality().hash(internalReleasedId),
+        const DeepCollectionEquality().hash(upc),
+        const DeepCollectionEquality().hash(labelMain),
+        const DeepCollectionEquality().hash(isCheck),
+        const DeepCollectionEquality().hash(langId),
+        const DeepCollectionEquality().hash(trackId),
+        const DeepCollectionEquality().hash(genre1),
+        const DeepCollectionEquality().hash(genre2),
+        const DeepCollectionEquality().hash(user)
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -897,12 +952,14 @@ abstract class _DataVideoRes extends DataVideoRes {
           required String cCopyright,
       @JsonKey(name: 'released', defaultValue: '')
           required String released,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
+      @JsonKey(name: 'label_name')
+          LabelRes? labelName,
       @JsonKey(name: 'internal_released_id', defaultValue: 0)
           required int internalReleasedId,
       @JsonKey(name: 'upc', defaultValue: 0)
           required int upc,
+      @JsonKey(name: 'label')
+          LabelRes? labelMain,
       @JsonKey(name: 'is_check', defaultValue: 0)
           required int isCheck,
       @JsonKey(name: 'lang_id')
@@ -948,14 +1005,17 @@ abstract class _DataVideoRes extends DataVideoRes {
   @JsonKey(name: 'released', defaultValue: '')
   String get released;
   @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName;
+  @JsonKey(name: 'label_name')
+  LabelRes? get labelName;
   @override
   @JsonKey(name: 'internal_released_id', defaultValue: 0)
   int get internalReleasedId;
   @override
   @JsonKey(name: 'upc', defaultValue: 0)
   int get upc;
+  @override
+  @JsonKey(name: 'label')
+  LabelRes? get labelMain;
   @override
   @JsonKey(name: 'is_check', defaultValue: 0)
   int get isCheck;
@@ -1023,8 +1083,6 @@ class _$TrackIdResTearOff {
           required String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1057,7 +1115,6 @@ class _$TrackIdResTearOff {
       thisTrackIs: thisTrackIs,
       pCopyright: pCopyright,
       previewsStartTime: previewsStartTime,
-      labelName: labelName,
       internalTrackId: internalTrackId,
       lyric: lyric,
       contributorId: contributorId,
@@ -1112,8 +1169,6 @@ mixin _$TrackIdRes {
   String get pCopyright => throw _privateConstructorUsedError;
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   int get previewsStartTime => throw _privateConstructorUsedError;
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName => throw _privateConstructorUsedError;
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   int get internalTrackId => throw _privateConstructorUsedError;
   @JsonKey(name: 'lyric', defaultValue: '')
@@ -1175,8 +1230,6 @@ abstract class $TrackIdResCopyWith<$Res> {
           String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1225,7 +1278,6 @@ class _$TrackIdResCopyWithImpl<$Res> implements $TrackIdResCopyWith<$Res> {
     Object? thisTrackIs = freezed,
     Object? pCopyright = freezed,
     Object? previewsStartTime = freezed,
-    Object? labelName = freezed,
     Object? internalTrackId = freezed,
     Object? lyric = freezed,
     Object? contributorId = freezed,
@@ -1303,10 +1355,6 @@ class _$TrackIdResCopyWithImpl<$Res> implements $TrackIdResCopyWith<$Res> {
           ? _value.previewsStartTime
           : previewsStartTime // ignore: cast_nullable_to_non_nullable
               as int,
-      labelName: labelName == freezed
-          ? _value.labelName
-          : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
       internalTrackId: internalTrackId == freezed
           ? _value.internalTrackId
           : internalTrackId // ignore: cast_nullable_to_non_nullable
@@ -1424,8 +1472,6 @@ abstract class _$TrackIdResCopyWith<$Res> implements $TrackIdResCopyWith<$Res> {
           String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          String labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1480,7 +1526,6 @@ class __$TrackIdResCopyWithImpl<$Res> extends _$TrackIdResCopyWithImpl<$Res>
     Object? thisTrackIs = freezed,
     Object? pCopyright = freezed,
     Object? previewsStartTime = freezed,
-    Object? labelName = freezed,
     Object? internalTrackId = freezed,
     Object? lyric = freezed,
     Object? contributorId = freezed,
@@ -1558,10 +1603,6 @@ class __$TrackIdResCopyWithImpl<$Res> extends _$TrackIdResCopyWithImpl<$Res>
           ? _value.previewsStartTime
           : previewsStartTime // ignore: cast_nullable_to_non_nullable
               as int,
-      labelName: labelName == freezed
-          ? _value.labelName
-          : labelName // ignore: cast_nullable_to_non_nullable
-              as String,
       internalTrackId: internalTrackId == freezed
           ? _value.internalTrackId
           : internalTrackId // ignore: cast_nullable_to_non_nullable
@@ -1634,8 +1675,6 @@ class _$_TrackIdRes extends _TrackIdRes {
           required this.pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required this.previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required this.labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required this.internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1707,9 +1746,6 @@ class _$_TrackIdRes extends _TrackIdRes {
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   final int previewsStartTime;
   @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  final String labelName;
-  @override
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   final int internalTrackId;
   @override
@@ -1733,7 +1769,7 @@ class _$_TrackIdRes extends _TrackIdRes {
 
   @override
   String toString() {
-    return 'TrackIdRes(artisName: $artisName, artisNameAnotherId: $artisNameAnotherId, image: $image, cover: $cover, trackTitle: $trackTitle, trackVersion: $trackVersion, trackTitleAnotherId: $trackTitleAnotherId, isrc: $isrc, langYyric: $langYyric, createdAt: $createdAt, spotify: $spotify, itunes: $itunes, otherArtisId: $otherArtisId, explisitLyric: $explisitLyric, thisTrackIs: $thisTrackIs, pCopyright: $pCopyright, previewsStartTime: $previewsStartTime, labelName: $labelName, internalTrackId: $internalTrackId, lyric: $lyric, contributorId: $contributorId, contributor: $contributor, lang: $lang, genre1: $genre1, genre2: $genre2)';
+    return 'TrackIdRes(artisName: $artisName, artisNameAnotherId: $artisNameAnotherId, image: $image, cover: $cover, trackTitle: $trackTitle, trackVersion: $trackVersion, trackTitleAnotherId: $trackTitleAnotherId, isrc: $isrc, langYyric: $langYyric, createdAt: $createdAt, spotify: $spotify, itunes: $itunes, otherArtisId: $otherArtisId, explisitLyric: $explisitLyric, thisTrackIs: $thisTrackIs, pCopyright: $pCopyright, previewsStartTime: $previewsStartTime, internalTrackId: $internalTrackId, lyric: $lyric, contributorId: $contributorId, contributor: $contributor, lang: $lang, genre1: $genre1, genre2: $genre2)';
   }
 
   @override
@@ -1767,7 +1803,6 @@ class _$_TrackIdRes extends _TrackIdRes {
                 .equals(other.pCopyright, pCopyright) &&
             const DeepCollectionEquality()
                 .equals(other.previewsStartTime, previewsStartTime) &&
-            const DeepCollectionEquality().equals(other.labelName, labelName) &&
             const DeepCollectionEquality()
                 .equals(other.internalTrackId, internalTrackId) &&
             const DeepCollectionEquality().equals(other.lyric, lyric) &&
@@ -1800,7 +1835,6 @@ class _$_TrackIdRes extends _TrackIdRes {
         const DeepCollectionEquality().hash(thisTrackIs),
         const DeepCollectionEquality().hash(pCopyright),
         const DeepCollectionEquality().hash(previewsStartTime),
-        const DeepCollectionEquality().hash(labelName),
         const DeepCollectionEquality().hash(internalTrackId),
         const DeepCollectionEquality().hash(lyric),
         const DeepCollectionEquality().hash(contributorId),
@@ -1857,8 +1891,6 @@ abstract class _TrackIdRes extends TrackIdRes {
           required String pCopyright,
       @JsonKey(name: 'previews_start_time', defaultValue: 0)
           required int previewsStartTime,
-      @JsonKey(name: 'label_name', defaultValue: '')
-          required String labelName,
       @JsonKey(name: 'internal_track_id', defaultValue: 0)
           required int internalTrackId,
       @JsonKey(name: 'lyric', defaultValue: '')
@@ -1929,9 +1961,6 @@ abstract class _TrackIdRes extends TrackIdRes {
   @override
   @JsonKey(name: 'previews_start_time', defaultValue: 0)
   int get previewsStartTime;
-  @override
-  @JsonKey(name: 'label_name', defaultValue: '')
-  String get labelName;
   @override
   @JsonKey(name: 'internal_track_id', defaultValue: 0)
   int get internalTrackId;

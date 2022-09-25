@@ -21,6 +21,7 @@ class ProfileRes with _$ProfileRes {
     @JsonKey(name: 'first_name', defaultValue: '') required String firstName,
     @JsonKey(name: 'last_name', defaultValue: '') required String lastName,
     @JsonKey(name: 'level_id', defaultValue: 0) required int levelId,
+    @JsonKey(name: 'username', defaultValue: '') required String username,
   }) = _ProfileRes;
 
   factory ProfileRes.fromJson(Map<String, dynamic> json) =>

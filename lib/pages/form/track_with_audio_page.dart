@@ -322,70 +322,75 @@ class _TrackWithAudioPageState extends State<TrackWithAudioPage> {
         ),
         SizedBox(height: 10),
         Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        vText(
-                          "Label name",
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        SizedBox(height: 8),
-                        (widget.state.isLoadingLabel == true)
-                            ? CircularProgressIndicator(
-                                color: CPPrimaryColor,
-                              )
-                            : VDropDown(
-                                value: widget.state.tracksLabel,
-                                onChanged: (String? data) {
-                                  setState(() {
-                                    widget.state.tracksLabel = data ?? '';
-                                  });
-                                },
-                                items: widget.state.listLabel
-                                    .map<DropdownMenuItem<String>>(
-                                        (LabelRes value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value.nama,
-                                    child: Text(value.nama),
-                                  );
-                                }).toList(),
-                                borderColor: CPPrimaryColor.withOpacity(0.1),
-                                icon: Icon(Icons.arrow_drop_down),
-                              ),
-                      ],
-                    ),
+                  vText(
+                    "Label name",
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        vText(
-                          "Internal track ID",
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
+                  SizedBox(height: 8),
+                  (widget.state.isLoadingLabel == true)
+                      ? CircularProgressIndicator(
+                          color: CPPrimaryColor,
+                        )
+                      : VDropDownLabel(
+                          value: widget.state.tracksLabel,
+                          onChanged: (LabelRes? data) {
+                            setState(() {
+                              widget.state.tracksLabel = data ??
+                                  LabelRes(
+                                    id: 0,
+                                    nama: '',
+                                    labelCode: 0,
+                                  );
+                            });
+                          },
+                          items: widget.state.listLabel
+                              .map<DropdownMenuItem<LabelRes>>(
+                                  (LabelRes value) {
+                            return DropdownMenuItem<LabelRes>(
+                              value: value,
+                              child: Text(value.nama),
+                            );
+                          }).toList(),
+                          borderColor: CPPrimaryColor.withOpacity(0.1),
+                          icon: Icon(Icons.arrow_drop_down),
                         ),
-                        SizedBox(height: 8),
-                        VInputText(
-                          'text',
-                          radius: 8,
-                          outlineColor: CPPrimaryColor.withOpacity(0.1),
-                          activeColor: CPPrimaryColor,
-                          fontSize: 10,
-                          keyboardType: TextInputType.number,
-                          controller: widget.state.tracksInputInternalTracksId,
-                          fillColor: CPPrimaryColor.withOpacity(0.04),
-                        ),
-                      ],
-                    ),
+                ],
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  vText(
+                    "Internal track ID",
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(height: 8),
+                  VInputText(
+                    'text',
+                    radius: 8,
+                    outlineColor: CPPrimaryColor.withOpacity(0.1),
+                    activeColor: CPPrimaryColor,
+                    fontSize: 10,
+                    keyboardType: TextInputType.number,
+                    controller: widget.state.tracksInputInternalTracksId,
+                    fillColor: CPPrimaryColor.withOpacity(0.04),
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
         SizedBox(height: 10),
       ],
     );
@@ -861,37 +866,37 @@ class _TrackWithAudioPageState extends State<TrackWithAudioPage> {
               flex: 2,
               child: (widget.state.audio == null)
                   ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  vText(
-                    "Drag your file here or click to upload",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  vText(
-                    "Stereo WAV file only. Minimum bit depth: 16 bit, sample rate: 44.1 kHz",
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ],
-              )
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        vText(
+                          "Drag your file here or click to upload",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        vText(
+                          "Stereo WAV file only. Minimum bit depth: 16 bit, sample rate: 44.1 kHz",
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    )
                   : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  vText(
-                    "File name : ${widget.state.fileNameAudio}",
-                    fontSize: 12,
-                    maxLines: 2,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  vText(
-                    "Size : ${widget.state.sizeAudio}",
-                    fontSize: 12,
-                    maxLines: 2,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ],
-              ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        vText(
+                          "File name : ${widget.state.fileNameAudio}",
+                          fontSize: 12,
+                          maxLines: 2,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        vText(
+                          "Size : ${widget.state.sizeAudio}",
+                          fontSize: 12,
+                          maxLines: 2,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ],
+                    ),
             ),
           ],
         ),

@@ -1,7 +1,9 @@
 import 'package:cloud_storage/controllers/amount_controller.dart';
+import 'package:cloud_storage/controllers/cek_req_controller.dart';
 import 'package:cloud_storage/controllers/user_controller.dart';
 import 'package:cloud_storage/pages/home/home_page.dart';
 import 'package:cloud_storage/pages/login/login_page.dart';
+import 'package:cloud_storage/pages/splash_page.dart';
 import 'package:cloud_storage/resource/color_schemes.g.dart';
 import 'package:cloud_storage/store/AppStore.dart';
 import 'package:cloud_storage/utils/ShConstant.dart';
@@ -26,6 +28,7 @@ void main() async {
 
   final user = Get.put(UserController());
   final amount = Get.put(AmountController());
+  final cekReq = Get.put(CekReqController());
   runApp(const MyApp());
 }
 

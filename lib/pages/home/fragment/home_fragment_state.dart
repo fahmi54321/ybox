@@ -1,4 +1,5 @@
 import 'package:cloud_storage/controllers/amount_controller.dart';
+import 'package:cloud_storage/controllers/cek_req_controller.dart';
 import 'package:cloud_storage/models/grafik/grafik_res.dart';
 import 'package:cloud_storage/network/http_dashoboard.dart';
 import 'package:cloud_storage/network/http_grafik.dart';
@@ -57,6 +58,7 @@ class HomeFragmentStates extends ChangeNotifier {
   bool isLoadingJmlSetup = false;
 
   final getAmount = gets.Get.find<AmountController>();
+  final cekReq = gets.Get.find<CekReqController>();
 
   HomeFragmentStates(this.context) {
     init();
@@ -105,12 +107,12 @@ class HomeFragmentStates extends ChangeNotifier {
             for (var grafik in data.data) {
               dataGrafikTrack.data.add(grafik);
             }
-          } else if (data.name.toLowerCase() == 'Ringtone') {
+          } else if (data.name.toLowerCase() == 'ringtone') {
             dataGrafikRingtone.name = data.name;
             for (var grafik in data.data) {
               dataGrafikRingtone.data.add(grafik);
             }
-          } else if (data.name.toLowerCase() == 'Video') {
+          } else if (data.name.toLowerCase() == 'video') {
             dataGrafikVideo.name = data.name;
             for (var grafik in data.data) {
               dataGrafikVideo.data.add(grafik);
@@ -200,7 +202,7 @@ class HomeFragmentStates extends ChangeNotifier {
         );
       },
           (cat) async {
-        jmlVideo = cat;
+        jmlAudio = cat;
         isLoadingJmlAudio = false;
         notifyListeners();
       },
@@ -237,6 +239,7 @@ class HomeFragmentStates extends ChangeNotifier {
   void getJmlAmount() async {
     getAmount.getJmlAmount(context);
   }
+
 
   void getJmlSetup() async {
     isLoadingJmlSetup = true;

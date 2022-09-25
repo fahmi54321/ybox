@@ -1,4 +1,5 @@
 import 'package:cloud_storage/models/general/constributor_res.dart';
+import 'package:cloud_storage/models/general/label_res.dart';
 import 'package:cloud_storage/models/general/language_res.dart';
 import 'package:cloud_storage/models/general/pagination_res.dart';
 import 'package:cloud_storage/models/general/publishing_res.dart';
@@ -48,10 +49,11 @@ class DataAlbumRes with _$DataAlbumRes {
     @JsonKey(name: 'p_copyright', defaultValue: '') required String pCopyright,
     @JsonKey(name: 'c_copyright', defaultValue: '') required String cCopyright,
     @JsonKey(name: 'released_date', defaultValue: '') required String releasedDate,
-    @JsonKey(name: 'label_name', defaultValue: '') required String labelName,
+    @JsonKey(name: 'label_name') LabelRes? labelName,
     @JsonKey(name: 'released_id', defaultValue: 0) required int releasedId,
     @JsonKey(name: 'upc', defaultValue: 0) required int upc,
     @JsonKey(name: 'is_check', defaultValue: 0) required int isCheck,
+    @JsonKey(name: 'label') LabelRes? labelMain,
     @JsonKey(name: 'lang_id') LanguageRes? langId,
     @JsonKey(name: 'track_id') TrackIdRes? trackId,
     @JsonKey(name: 'genre_1') GenreRes? genre1,
@@ -91,7 +93,6 @@ class TrackIdRes with _$TrackIdRes {
     @JsonKey(name: 'this_track_is', defaultValue: 0) required int thisTrackIs,
     @JsonKey(name: 'p_copyright', defaultValue: '') required String pCopyright,
     @JsonKey(name: 'previews_start_time', defaultValue: 0) required int previewsStartTime,
-    @JsonKey(name: 'label_name', defaultValue: '') required String labelName,
     @JsonKey(name: 'internal_track_id', defaultValue: 0) required int internalTrackId,
     @JsonKey(name: 'lyric', defaultValue: '') required String lyric,
     @JsonKey(name: 'contributor_id', defaultValue: '') required String contributorId,

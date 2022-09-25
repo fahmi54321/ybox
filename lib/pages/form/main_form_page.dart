@@ -174,7 +174,7 @@ class _MainFormPageState extends State<MainFormPage> {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Center(
-            child: vText('Berhasil', fontSize: 24),
+            child: vText('Berhasil Disimpan', fontSize: 24),
           ),
         ),
         const SizedBox(height: 10),

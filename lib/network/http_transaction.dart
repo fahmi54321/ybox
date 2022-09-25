@@ -56,6 +56,7 @@ class HTTPTransaction {
       }),
     );
     print('url : ${ApiUrl.getTransaction}');
+    print('params : ${data}');
     print('response : ${response.data}');
 
     if (response.statusCode == 200) {

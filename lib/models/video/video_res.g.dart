@@ -49,10 +49,19 @@ _$_DataVideoRes _$$_DataVideoResFromJson(Map json) => $checkedCreate(
           pCopyright: $checkedConvert('p_copyright', (v) => v as String? ?? ''),
           cCopyright: $checkedConvert('c_copyright', (v) => v as String? ?? ''),
           released: $checkedConvert('released', (v) => v as String? ?? ''),
-          labelName: $checkedConvert('label_name', (v) => v as String? ?? ''),
+          labelName: $checkedConvert(
+              'label_name',
+              (v) => v == null
+                  ? null
+                  : LabelRes.fromJson(Map<String, dynamic>.from(v as Map))),
           internalReleasedId:
               $checkedConvert('internal_released_id', (v) => v as int? ?? 0),
           upc: $checkedConvert('upc', (v) => v as int? ?? 0),
+          labelMain: $checkedConvert(
+              'label',
+              (v) => v == null
+                  ? null
+                  : LabelRes.fromJson(Map<String, dynamic>.from(v as Map))),
           isCheck: $checkedConvert('is_check', (v) => v as int? ?? 0),
           langId: $checkedConvert(
               'lang_id',
@@ -88,6 +97,7 @@ _$_DataVideoRes _$$_DataVideoResFromJson(Map json) => $checkedCreate(
         'cCopyright': 'c_copyright',
         'labelName': 'label_name',
         'internalReleasedId': 'internal_released_id',
+        'labelMain': 'label',
         'isCheck': 'is_check',
         'langId': 'lang_id',
         'trackId': 'track_id',
@@ -108,10 +118,6 @@ Map<String, dynamic> _$$_DataVideoResToJson(_$_DataVideoRes instance) {
     'p_copyright': instance.pCopyright,
     'c_copyright': instance.cCopyright,
     'released': instance.released,
-    'label_name': instance.labelName,
-    'internal_released_id': instance.internalReleasedId,
-    'upc': instance.upc,
-    'is_check': instance.isCheck,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -120,6 +126,11 @@ Map<String, dynamic> _$$_DataVideoResToJson(_$_DataVideoRes instance) {
     }
   }
 
+  writeNotNull('label_name', instance.labelName?.toJson());
+  val['internal_released_id'] = instance.internalReleasedId;
+  val['upc'] = instance.upc;
+  writeNotNull('label', instance.labelMain?.toJson());
+  val['is_check'] = instance.isCheck;
   writeNotNull('lang_id', instance.langId?.toJson());
   writeNotNull('track_id', instance.trackId?.toJson());
   writeNotNull('genre_1', instance.genre1?.toJson());
@@ -156,7 +167,6 @@ _$_TrackIdRes _$$_TrackIdResFromJson(Map json) => $checkedCreate(
           pCopyright: $checkedConvert('p_copyright', (v) => v as String? ?? ''),
           previewsStartTime:
               $checkedConvert('previews_start_time', (v) => v as int? ?? 0),
-          labelName: $checkedConvert('label_name', (v) => v as String? ?? ''),
           internalTrackId:
               $checkedConvert('internal_track_id', (v) => v as int? ?? 0),
           lyric: $checkedConvert('lyric', (v) => v as String? ?? ''),
@@ -199,7 +209,6 @@ _$_TrackIdRes _$$_TrackIdResFromJson(Map json) => $checkedCreate(
         'thisTrackIs': 'this_track_is',
         'pCopyright': 'p_copyright',
         'previewsStartTime': 'previews_start_time',
-        'labelName': 'label_name',
         'internalTrackId': 'internal_track_id',
         'contributorId': 'contributor_id'
       },
@@ -224,7 +233,6 @@ Map<String, dynamic> _$$_TrackIdResToJson(_$_TrackIdRes instance) {
     'this_track_is': instance.thisTrackIs,
     'p_copyright': instance.pCopyright,
     'previews_start_time': instance.previewsStartTime,
-    'label_name': instance.labelName,
     'internal_track_id': instance.internalTrackId,
     'lyric': instance.lyric,
     'contributor_id': instance.contributorId,

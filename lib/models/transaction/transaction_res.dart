@@ -37,6 +37,7 @@ class DataTransactionRes with _$DataTransactionRes {
     @JsonKey(name: 'name_on_bank', defaultValue: '') required String nameOnBank,
     @JsonKey(name: 'request_date', defaultValue: '') required String requestDate,
     @JsonKey(name: 'status', defaultValue: 0) required int status,
+    @JsonKey(name: 'amount', defaultValue: '') required String amount,
   }) = _DataTransactionRes;
 
   factory DataTransactionRes.fromJson(Map<String, dynamic> json) =>

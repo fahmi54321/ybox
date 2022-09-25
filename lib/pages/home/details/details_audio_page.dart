@@ -107,7 +107,7 @@ class DetailsAudioPageState extends State<DetailsAudioPage> {
           buildItemOverview(
             context: context,
             title: 'Label name',
-            nama: state.audioRes?.labelName ?? '-',
+            nama: state.audioRes?.labelName?.nama ?? '-',
           ),
           8.height,
           buildItemOverview(

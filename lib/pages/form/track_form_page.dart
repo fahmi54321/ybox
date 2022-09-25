@@ -31,7 +31,10 @@ class _TrackFormPageState extends State<TrackFormPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => TrackFormState(context: context,dataTrackRes: widget.args.dataTrackRes,),
+      create: (_) => TrackFormState(
+        context: context,
+        dataTrackRes: widget.args.dataTrackRes,
+      ),
       child: Consumer(
         builder: (BuildContext context, TrackFormState state, _) {
           return Scaffold(
@@ -45,7 +48,7 @@ class _TrackFormPageState extends State<TrackFormPage> {
               elevation: 0,
             ),
             body: (state.isCompleted == true)
-                ? SuksesInput(context: context,message: 'Berhasil')
+                ? SuksesInput(context: context, message: 'Berhasil')
                 : Stepper(
                     type: StepperType.horizontal,
                     steps: state.listSteps(),
@@ -101,11 +104,11 @@ class _TrackFormPageState extends State<TrackFormPage> {
                           if (state.currentStep != 0) const SizedBox(width: 20),
                           Expanded(
                             child: VButtonRectangle(
-                              isLastStep
-                                  ? (state.isLoading == true)
-                                      ? 'Loading...'
-                                      : 'Approve'
-                                  : 'Selanjutnya',
+                              state.setTextButton(
+                                isLastStep: isLastStep,
+                                isLoading: state.isLoading,
+                                dataTrack: state.dataTrackRes,
+                              ),
                               radius: 55,
                               width: MediaQuery.of(context).size.width,
                               height: 46,
@@ -141,7 +144,7 @@ class _TrackFormPageState extends State<TrackFormPage> {
     );
   }
 
-  Widget SuksesInput({required BuildContext context, required String message}){
+  Widget SuksesInput({required BuildContext context, required String message}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -157,20 +160,14 @@ class _TrackFormPageState extends State<TrackFormPage> {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Center(
-            child: vText(
-                'Berhasil',
-                fontSize: 24
-            ),
+            child: vText('Berhasil', fontSize: 24),
           ),
         ),
         const SizedBox(height: 10),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Center(
-            child: vText(
-                message,
-                fontSize: 14
-            ),
+            child: vText(message, fontSize: 14),
           ),
         ),
         const SizedBox(height: 60),

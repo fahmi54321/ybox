@@ -1,5 +1,6 @@
 import 'package:cloud_storage/models/general/constributor_res.dart';
 import 'package:cloud_storage/models/general/genre_res.dart';
+import 'package:cloud_storage/models/general/label_res.dart';
 import 'package:cloud_storage/models/general/language_res.dart';
 import 'package:cloud_storage/models/general/pagination_res.dart';
 import 'package:cloud_storage/models/general/user_res.dart';
@@ -54,7 +55,7 @@ class DataTrackRes with _$DataTrackRes {
     @JsonKey(name: 'this_track_is', defaultValue: 0) required int thisTrackIs,
     @JsonKey(name: 'p_copyright', defaultValue: '') required String pCopyright,
     @JsonKey(name: 'previews_start_time', defaultValue: 0) required int previewsStartTime,
-    @JsonKey(name: 'label_name', defaultValue: '') required String labelName,
+    @JsonKey(name: 'label_name') LabelRes? labelName,
     @JsonKey(name: 'internal_track_id', defaultValue: 0) required int internalTrackId,
     @JsonKey(name: 'lyric', defaultValue: '') required String lyric,
     @JsonKey(name: 'contributor_id', defaultValue: '') required String contributorId,

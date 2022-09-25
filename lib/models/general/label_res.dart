@@ -17,7 +17,7 @@ class LabelRes with _$LabelRes {
   const factory LabelRes({
     @JsonKey(name: 'id', defaultValue: 0) required int id,
     @JsonKey(name: 'nama', defaultValue: '') required String nama,
-    @JsonKey(name: 'label_code', defaultValue: 0) required int labelCode,
+    @JsonKey(name: 'label', defaultValue: 0) required int labelCode,
   }) = _LabelRes;
 
   factory LabelRes.fromJson(Map<String, dynamic> json) =>

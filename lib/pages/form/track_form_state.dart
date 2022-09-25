@@ -227,7 +227,7 @@ class TrackFormState extends ChangeNotifier {
   TextEditingController tracksInputExplicitLyrics = TextEditingController();
   String tracksGenre1 = 'Select genre';
   String tracksGenre2 = 'Select genre';
-  String tracksLabel = 'Select label';
+  LabelRes? tracksLabel;
   TextEditingController tracksInputCopyrightP = TextEditingController();
   TextEditingController tracksInputCopyrightC = TextEditingController();
   TextEditingController tracksInputInternalTracksId = TextEditingController();
@@ -492,7 +492,7 @@ class TrackFormState extends ChangeNotifier {
     isLoadingLabel = true;
     notifyListeners();
 
-    final resStep1 = await HTTPGeneral().getLabel();
+    final resStep1 = await HTTPGeneral().getLabelReq();
     isLoadingLabel = false;
 
     notifyListeners();
@@ -509,16 +509,15 @@ class TrackFormState extends ChangeNotifier {
       },
       (cat) async {
         listLabel = cat;
-        // if ((dataTrackRes?.labelName ?? '').isNotEmpty) {
-        //   log('ada label');
-        //   log('${dataTrackRes?.labelName ?? ''}');
-        //   tracksLabel = dataTrackRes?.labelName ?? '';
-        // } else {
-        //   log('tidak ada label');
-        //   log('${cat[0].nama}');
-        //   tracksLabel = cat[0].nama;
-        // }
-        tracksLabel = cat[0].nama;
+        if (dataTrackRes?.labelName!=null) {
+          log('ada label');
+          log('${dataTrackRes?.labelName ?? ''}');
+          tracksLabel = dataTrackRes?.labelName;
+        } else {
+          log('tidak ada label');
+          log('${cat[0].nama}');
+          tracksLabel = cat[0];
+        }
         isLoadingLabel = false;
         notifyListeners();
       },
@@ -631,7 +630,7 @@ class TrackFormState extends ChangeNotifier {
     albumSave.genre2Info = genreRes2Tracks?.id.toString() ?? '0';
     albumSave.pCopyInfo = tracksInputCopyrightP.text;
     albumSave.startTime = tracksInputCopyrightC.text;
-    albumSave.labelInfo = tracksLabel;
+    albumSave.labelInfo = tracksLabel?.labelCode.toString()??'0';
     albumSave.trackIdInfo = tracksInputInternalTracksId.text;
     albumSave.lirik = tracksInputLyrics.text;
     albumSave.conName = tracksInputContributorName.text;

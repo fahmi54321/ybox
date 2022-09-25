@@ -81,23 +81,52 @@ class _UbahPasswordPageState extends State<UbahPasswordPage> {
                     paddingHorizontal: 10,
                     paddingVertical: 10),
                 SizedBox(height: 20),
-                vText("Password Sekarang", fontSize: 14, fontWeight: FontWeight.w400, color: CPBlack1),
+                vText(
+                  "Password Baru",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: CPBlack1,
+                ),
                 SizedBox(height: 5),
-                VInputText("Masukkan password sekarang", suffixIcon: Icon(Icons.remove_red_eye)),
-                SizedBox(height: 10),
-                vText("Password Baru", fontSize: 14, fontWeight: FontWeight.w400, color: CPBlack1),
-                SizedBox(height: 5),
-                VInputText("Masukkan password baru", suffixIcon: Icon(Icons.remove_red_eye))
+                VInputText(
+                  "Masukkan password baru",
+                  controller: state.passwordController,
+                  obscureText: state.passwordInvisible,
+                  maxLines: 1,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      state.updateVisibleInvisiblePassNow();
+                    },
+                    icon: state.passwordInvisible
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.remove_red_eye_outlined),
+                  ),
+                )
               ],
             )),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: VButton(text: "Simpan",
-            radius: 12,
-            paddingHorizontal: 8,
-            paddingVertical: 8,
-            width: MediaQuery.of(context).size.width, height: 45),
+        child: VButtonRectangle(
+          (state.isLoading == true) ? 'Loading...' : 'Simpan',
+          radius: 12,
+          width: MediaQuery.of(context).size.width,
+          height: 46,
+          onTap: (state.isLoading == true)
+              ? null
+              : () {
+                  state.ubahPassword();
+                },
+          trailing: (state.isLoading == true)
+              ? SizedBox(
+                  height: 15,
+                  width: 15,
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                )
+              : null,
+        ),
       ),
     );
   }

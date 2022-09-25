@@ -27,13 +27,15 @@ class _$ProfileResTearOff {
       @JsonKey(name: 'image', defaultValue: '') required String image,
       @JsonKey(name: 'first_name', defaultValue: '') required String firstName,
       @JsonKey(name: 'last_name', defaultValue: '') required String lastName,
-      @JsonKey(name: 'level_id', defaultValue: 0) required int levelId}) {
+      @JsonKey(name: 'level_id', defaultValue: 0) required int levelId,
+      @JsonKey(name: 'username', defaultValue: '') required String username}) {
     return _ProfileRes(
       id: id,
       image: image,
       firstName: firstName,
       lastName: lastName,
       levelId: levelId,
+      username: username,
     );
   }
 
@@ -57,6 +59,8 @@ mixin _$ProfileRes {
   String get lastName => throw _privateConstructorUsedError;
   @JsonKey(name: 'level_id', defaultValue: 0)
   int get levelId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'username', defaultValue: '')
+  String get username => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,7 +78,8 @@ abstract class $ProfileResCopyWith<$Res> {
       @JsonKey(name: 'image', defaultValue: '') String image,
       @JsonKey(name: 'first_name', defaultValue: '') String firstName,
       @JsonKey(name: 'last_name', defaultValue: '') String lastName,
-      @JsonKey(name: 'level_id', defaultValue: 0) int levelId});
+      @JsonKey(name: 'level_id', defaultValue: 0) int levelId,
+      @JsonKey(name: 'username', defaultValue: '') String username});
 }
 
 /// @nodoc
@@ -92,6 +97,7 @@ class _$ProfileResCopyWithImpl<$Res> implements $ProfileResCopyWith<$Res> {
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? levelId = freezed,
+    Object? username = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -114,6 +120,10 @@ class _$ProfileResCopyWithImpl<$Res> implements $ProfileResCopyWith<$Res> {
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
               as int,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -129,7 +139,8 @@ abstract class _$ProfileResCopyWith<$Res> implements $ProfileResCopyWith<$Res> {
       @JsonKey(name: 'image', defaultValue: '') String image,
       @JsonKey(name: 'first_name', defaultValue: '') String firstName,
       @JsonKey(name: 'last_name', defaultValue: '') String lastName,
-      @JsonKey(name: 'level_id', defaultValue: 0) int levelId});
+      @JsonKey(name: 'level_id', defaultValue: 0) int levelId,
+      @JsonKey(name: 'username', defaultValue: '') String username});
 }
 
 /// @nodoc
@@ -149,6 +160,7 @@ class __$ProfileResCopyWithImpl<$Res> extends _$ProfileResCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? levelId = freezed,
+    Object? username = freezed,
   }) {
     return _then(_ProfileRes(
       id: id == freezed
@@ -171,6 +183,10 @@ class __$ProfileResCopyWithImpl<$Res> extends _$ProfileResCopyWithImpl<$Res>
           ? _value.levelId
           : levelId // ignore: cast_nullable_to_non_nullable
               as int,
+      username: username == freezed
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -185,7 +201,8 @@ class _$_ProfileRes extends _ProfileRes {
       @JsonKey(name: 'image', defaultValue: '') required this.image,
       @JsonKey(name: 'first_name', defaultValue: '') required this.firstName,
       @JsonKey(name: 'last_name', defaultValue: '') required this.lastName,
-      @JsonKey(name: 'level_id', defaultValue: 0) required this.levelId})
+      @JsonKey(name: 'level_id', defaultValue: 0) required this.levelId,
+      @JsonKey(name: 'username', defaultValue: '') required this.username})
       : super._();
 
   factory _$_ProfileRes.fromJson(Map<String, dynamic> json) =>
@@ -206,10 +223,13 @@ class _$_ProfileRes extends _ProfileRes {
   @override
   @JsonKey(name: 'level_id', defaultValue: 0)
   final int levelId;
+  @override
+  @JsonKey(name: 'username', defaultValue: '')
+  final String username;
 
   @override
   String toString() {
-    return 'ProfileRes(id: $id, image: $image, firstName: $firstName, lastName: $lastName, levelId: $levelId)';
+    return 'ProfileRes(id: $id, image: $image, firstName: $firstName, lastName: $lastName, levelId: $levelId, username: $username)';
   }
 
   @override
@@ -221,7 +241,8 @@ class _$_ProfileRes extends _ProfileRes {
             const DeepCollectionEquality().equals(other.image, image) &&
             const DeepCollectionEquality().equals(other.firstName, firstName) &&
             const DeepCollectionEquality().equals(other.lastName, lastName) &&
-            const DeepCollectionEquality().equals(other.levelId, levelId));
+            const DeepCollectionEquality().equals(other.levelId, levelId) &&
+            const DeepCollectionEquality().equals(other.username, username));
   }
 
   @override
@@ -231,7 +252,8 @@ class _$_ProfileRes extends _ProfileRes {
       const DeepCollectionEquality().hash(image),
       const DeepCollectionEquality().hash(firstName),
       const DeepCollectionEquality().hash(lastName),
-      const DeepCollectionEquality().hash(levelId));
+      const DeepCollectionEquality().hash(levelId),
+      const DeepCollectionEquality().hash(username));
 
   @JsonKey(ignore: true)
   @override
@@ -255,7 +277,9 @@ abstract class _ProfileRes extends ProfileRes {
       @JsonKey(name: 'last_name', defaultValue: '')
           required String lastName,
       @JsonKey(name: 'level_id', defaultValue: 0)
-          required int levelId}) = _$_ProfileRes;
+          required int levelId,
+      @JsonKey(name: 'username', defaultValue: '')
+          required String username}) = _$_ProfileRes;
   const _ProfileRes._() : super._();
 
   factory _ProfileRes.fromJson(Map<String, dynamic> json) =
@@ -276,6 +300,9 @@ abstract class _ProfileRes extends ProfileRes {
   @override
   @JsonKey(name: 'level_id', defaultValue: 0)
   int get levelId;
+  @override
+  @JsonKey(name: 'username', defaultValue: '')
+  String get username;
   @override
   @JsonKey(ignore: true)
   _$ProfileResCopyWith<_ProfileRes> get copyWith =>

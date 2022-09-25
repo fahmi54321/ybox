@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_storage/models/general/genre_res.dart';
+import 'package:cloud_storage/models/general/label_res.dart';
 import 'package:cloud_storage/models/general/language_res.dart';
 import 'package:cloud_storage/pages/form/main_form_state.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
@@ -340,17 +341,34 @@ class MainInfoAlbumPageState extends State<MainInfoAlbumPage> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                     SizedBox(height: 8),
-                                    VInputText(
-                                      'Input here...',
-                                      radius: 8,
-                                      outlineColor:
-                                          CPPrimaryColor.withOpacity(0.1),
-                                      activeColor: CPPrimaryColor,
-                                      fontSize: 10,
-                                      controller: state.inputLabelName,
-                                      fillColor:
-                                          CPPrimaryColor.withOpacity(0.04),
-                                    ),
+                                    (widget.state.isLoadingLabelReq == true)
+                                        ? CircularProgressIndicator(
+                                            color: CPPrimaryColor,
+                                          )
+                                        : VDropDownLabel(
+                                            value: state.mainLabel,
+                                            onChanged: (LabelRes? data) {
+                                              setState(() {
+                                                state.mainLabel = data ??
+                                                    LabelRes(
+                                                      id: 0,
+                                                      nama: '',
+                                                      labelCode: 0,
+                                                    );
+                                              });
+                                            },
+                                            items: state.listLabelReq.map<
+                                                    DropdownMenuItem<LabelRes>>(
+                                                (LabelRes value) {
+                                              return DropdownMenuItem<LabelRes>(
+                                                value: value,
+                                                child: Text(value.nama),
+                                              );
+                                            }).toList(),
+                                            borderColor:
+                                                CPPrimaryColor.withOpacity(0.1),
+                                            icon: Icon(Icons.arrow_drop_down),
+                                          ),
                                   ],
                                 ),
                               ),
