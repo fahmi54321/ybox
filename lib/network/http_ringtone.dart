@@ -32,10 +32,9 @@ class HTTPRingtone {
     log('response : ${response.data}');
     log('params : ${data.fields}');
 
-
     if (response.statusCode == 200) {
-      return Right(response.statusCode??0);
-    } else if(response.statusCode == 422){
+      return Right(response.statusCode ?? 0);
+    } else if (response.statusCode == 422) {
       return Left('Audio atau gambar formatnya kurang valid');
     } else {
       return Left('Terjadi kesalahan');
@@ -52,22 +51,21 @@ class HTTPRingtone {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().post(
-      ApiUrl.editAudio + id.toString(),
-      data: data,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-        'Accept': 'application/json',
-      }),
-    );
+          ApiUrl.editAudio + id.toString(),
+          data: data,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+            'Accept': 'application/json',
+          }),
+        );
 
     log('url : ${ApiUrl.editAudio + id.toString()}');
     log('response : ${response.data}');
     log('params : ${data.fields}');
 
-
     if (response.statusCode == 200) {
-      return Right(response.statusCode??0);
-    } else if(response.statusCode == 422){
+      return Right(response.statusCode ?? 0);
+    } else if (response.statusCode == 422) {
       return Left('Audio atau gambar formatnya kurang valid');
     } else {
       return Left('Terjadi kesalahan');
@@ -83,19 +81,19 @@ class HTTPRingtone {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.getRingtone,
-      queryParameters: data,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.getRingtone,
+          queryParameters: data,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
     print('url : ${ApiUrl.getRingtone}');
     print('params : $data');
     print('response : ${response.data}');
 
     if (response.statusCode == 200) {
-      final result = AudioRes.fromJson(
-          response.data['data'] as Map<String, dynamic>);
+      final result =
+          AudioRes.fromJson(response.data['data'] as Map<String, dynamic>);
       return Right(result);
     } else {
       return Left('Terjadi kesalahan');
@@ -111,17 +109,17 @@ class HTTPRingtone {
     LoginRes loginRes = await getUser.getUserLogin();
 
     final response = await WebService().client().get(
-      ApiUrl.detailsRingtone + id,
-      options: Options(headers: {
-        'Authorization': 'Bearer ' + loginRes.access_token,
-      }),
-    );
+          ApiUrl.detailsRingtone + id,
+          options: Options(headers: {
+            'Authorization': 'Bearer ' + loginRes.access_token,
+          }),
+        );
     print('url : ${ApiUrl.detailsRingtone + id}');
     print('response : ${response.data}');
 
     if (response.statusCode == 200) {
-      final result = DataAudioRes.fromJson(
-          response.data as Map<String, dynamic>);
+      final result =
+          DataAudioRes.fromJson(response.data as Map<String, dynamic>);
       return Right(result);
     } else {
       return Left('Terjadi kesalahan');
