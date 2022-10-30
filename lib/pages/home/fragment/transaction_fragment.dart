@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_storage/models/transaction/transaction_res.dart';
 import 'package:cloud_storage/pages/form/add_transaction_page.dart';
+import 'package:cloud_storage/pages/home/fragment/invoice/pdf__invoice_api.dart';
+import 'package:cloud_storage/pages/home/fragment/invoice/pdf_api.dart';
 import 'package:cloud_storage/pages/home/fragment/transaction_fragment_state.dart';
 import 'package:cloud_storage/pages/listener_navigation.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
@@ -87,139 +91,177 @@ class _TransactionFragment extends State<TransactionFragment> {
                                   ),
                                   padding: EdgeInsets.all(5),
                                   child: IntrinsicHeight(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
+                                    child: Stack(
                                       children: [
-                                        CircleAvatar(
-                                          radius: 30,
-                                          backgroundColor:
-                                              state.statusIconColorTrans(
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 30,
+                                              backgroundColor:
+                                                  state.statusIconColorTrans(
+                                                      item.status),
+                                              child: state.statusIconItemTrans(
                                                   item.status),
-                                          child: state
-                                              .statusIconItemTrans(item.status),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Column(
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  SizedBox(height: 8),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16),
-                                                    child: vText(
-                                                      'Member name',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16.0),
-                                                    child: vText(
-                                                      (item.member.isEmpty)
-                                                          ? '-'
-                                                          : item.member,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 8),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16),
-                                                    child: vText(
-                                                      'Account name',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16.0),
-                                                    child: vText(
-                                                      (item?.nameOnBank
-                                                                  .isEmpty ??
-                                                              false)
-                                                          ? '-'
-                                                          : item.nameOnBank ??
-                                                              '-',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 8),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16),
-                                                    child: vText(
-                                                      'Request date',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16.0),
-                                                    child: vText(
-                                                      (item?.requestDate
-                                                                  .isEmpty ??
-                                                              false)
-                                                          ? '-'
-                                                          : item.requestDate ??
-                                                              '-',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 8),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16),
-                                                    child: vText(
-                                                      'Amount',
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 16.0),
-                                                    child: vText(
-                                                      item.amount,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(height: 8),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 16),
+                                                        child: vText(
+                                                          'Member name',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 16.0),
+                                                        child: vText(
+                                                          (item.member.isEmpty)
+                                                              ? '-'
+                                                              : item.member,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 16),
+                                                        child: vText(
+                                                          'Account name',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 16.0),
+                                                        child: vText(
+                                                          (item?.nameOnBank
+                                                                      .isEmpty ??
+                                                                  false)
+                                                              ? '-'
+                                                              : item.nameOnBank ??
+                                                                  '-',
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 16),
+                                                        child: vText(
+                                                          'Request date',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 16.0),
+                                                        child: vText(
+                                                          (item?.requestDate
+                                                                      .isEmpty ??
+                                                                  false)
+                                                              ? '-'
+                                                              : item.requestDate ??
+                                                                  '-',
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(left: 16),
+                                                        child: vText(
+                                                          'Amount',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 16.0),
+                                                        child: vText(
+                                                          item.amount,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                        )
+                                            )
+                                          ],
+                                        ),
+                                        (item.status == 2)
+                                            ? Positioned(
+                                                right: 0,
+                                                top: 0,
+                                                child: IconButton(
+                                                  icon:
+                                                      (state.isLoadingInvoice) ==
+                                                              false
+                                                          ? Icon(
+                                                              Icons.print,
+                                                              size: 25,
+                                                            )
+                                                          : SizedBox(
+                                                              height: 25,
+                                                              width: 25,
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ),
+                                                  color: CPGreen,
+                                                  onPressed: () async {
+
+                                                    state.getInvoice(
+                                                      idTrans:
+                                                          item.id.toString(),
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                            : Container(),
                                       ],
                                     ),
                                   ),

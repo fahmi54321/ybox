@@ -70,8 +70,11 @@ dependencies:
   fluttertoast: ^8.0.9
   rename: ^2.0.1
   flutter_native_splash: ^2.2.9
-
   infinite_scroll_pagination: ^3.2.0
+  printing: ^5.9.3
+  path: ^1.8.1
+  flutter_pdfview: ^1.2.1
+  pdf: ^3.8.3
 
 dev_dependencies:
   flutter_test:

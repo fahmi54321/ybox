@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_storage/controllers/amount_controller.dart';
 import 'package:cloud_storage/controllers/cek_req_controller.dart';
 import 'package:cloud_storage/controllers/user_controller.dart';
+import 'package:cloud_storage/models/invoice/invoice_res.dart';
 import 'package:cloud_storage/models/login_res.dart';
 import 'package:cloud_storage/models/transaction/transaction_res.dart';
 import 'package:cloud_storage/network/http_dashoboard.dart';
 import 'package:cloud_storage/network/http_transaction.dart';
+import 'package:cloud_storage/pages/home/fragment/invoice/pdf__invoice_api.dart';
+import 'package:cloud_storage/pages/home/fragment/invoice/pdf_api.dart';
 import 'package:cloud_storage/resource/CPColors.dart';
 import 'package:cloud_storage/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +26,25 @@ class TransactionState extends ChangeNotifier {
   final cekReq = gets.Get.find<CekReqController>();
 
   bool isLoadingCekReq = false;
+  bool isLoadingInvoice = false;
 
   int jmlCekReq = 0;
+
+  InvoiceRes invoiceRes = InvoiceRes(
+    labelImage: '',
+    labelName: '',
+    invNo: 0,
+    paymentMethod: '',
+    accountName: '',
+    email: '',
+    bank: '',
+    nameOnBank: '',
+    noRek: '',
+    invoiceDate: '',
+    invoiceCreate: '',
+    amount: '',
+    id: '',
+  );
 
   TransactionState({required this.context}) {
     init();
@@ -43,10 +64,6 @@ class TransactionState extends ChangeNotifier {
       getTransaction(pageKey);
     });
   }
-
-  // void getCekReq() async {
-  //   cekReq.cekReq(context);
-  // }
 
   Future<void> pullRefresh() async {
     pagingController.refresh();
@@ -112,6 +129,43 @@ class TransactionState extends ChangeNotifier {
         jmlCekReq = cat;
         isLoadingCekReq = false;
         notifyListeners();
+      },
+    );
+  }
+
+  void getInvoice({required String idTrans}) async {
+    isLoadingInvoice = true;
+    notifyListeners();
+
+    final resStep1 = await HTTPTransaction().invoice(id: idTrans);
+
+    resStep1.fold(
+      (e) async {
+        isLoadingInvoice = false;
+        notifyListeners();
+
+        await VUtils.showDefaultAlertDialog(
+          context,
+          title: "Failed!",
+          message: e,
+        );
+      },
+      (cat) async {
+        invoiceRes = cat;
+
+        SavePdf savePdf = await PdfInvoiceApi.generate(cat);
+
+        isLoadingInvoice = false;
+        notifyListeners();
+
+        print(savePdf.file);
+
+        PdfApi.openPdf(
+          context,
+          savePdf,
+          cat,
+        );
+
       },
     );
   }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_storage/controllers/user_controller.dart';
 import 'package:cloud_storage/models/album/album_res.dart';
+import 'package:cloud_storage/models/invoice/invoice_res.dart';
 import 'package:cloud_storage/models/login_res.dart';
 import 'package:cloud_storage/models/transaction/transaction_res.dart';
 import 'package:cloud_storage/network/api_interceptor.dart';
@@ -87,6 +88,32 @@ class HTTPTransaction {
 
     if (response.statusCode == 200) {
       final result = DataTransactionRes.fromJson(
+          response.data as Map<String, dynamic>);
+      return Right(result);
+    } else {
+      return Left('Terjadi kesalahan');
+    }
+  }
+
+  Future<Either<String, InvoiceRes>> invoice({
+    required String id,
+  }) async {
+    print('HTTPGetIvoice start');
+
+    final getUser = gets.Get.find<UserController>();
+    LoginRes loginRes = await getUser.getUserLogin();
+
+    final response = await WebService().client().get(
+      ApiUrl.invoice + id,
+      options: Options(headers: {
+        'Authorization': 'Bearer ' + loginRes.access_token,
+      }),
+    );
+    print('url : ${ApiUrl.invoice + id}');
+    print('response : ${response.data}');
+
+    if (response.statusCode == 200) {
+      final result = InvoiceRes.fromJson(
           response.data as Map<String, dynamic>);
       return Right(result);
     } else {

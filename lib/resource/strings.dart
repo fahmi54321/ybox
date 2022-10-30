@@ -1,5 +1,5 @@
 //TODO SERVER DEV
-const String APP_URL = "http://hyjoe.masuk.web.id/ybox/public/";
+const String APP_URL = "https://labeldistributed.com/";
 // const String APP_URL = "http://192.168.1.18:8000/";
 // TODO SERVER SANBOX
 // const String APP_URL = "";

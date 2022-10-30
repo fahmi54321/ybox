@@ -13,10 +13,8 @@ import 'package:cloud_storage/utils/utils.dart';
 import 'package:cloud_storage/widget/v_text.dart';
 import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flushbar/flutter_flushbar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class DetailsAudioState extends ChangeNotifier {

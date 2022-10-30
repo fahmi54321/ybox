@@ -41,4 +41,5 @@ class ApiUrl {
   static String getTransaction = APP_URL + 'api/transaction_api';
   static String detailsTransaction = APP_URL + 'api/transaction/';
   static String profile = APP_URL + 'api/profile';
+  static String invoice = APP_URL + 'api/invoice/';
 }
